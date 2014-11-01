@@ -19,7 +19,10 @@
     "localizr": "^0.1.0",
     "node-sass": "^0.8.4",
     "requirejs": "^2.1.11",
-	"mysql":"*"
+	"mysql":"*",
+	"body-parser": "*",
+	"cookie-parser": "*",
+	"express-session": "*"
   },
   "devDependencies": {
     "grunt": "^0.4.1",
