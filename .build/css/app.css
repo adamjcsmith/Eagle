@@ -1,0 +1,64 @@
+#wrapper, body, html {
+  height: 100%;
+  margin: 0;
+  background: #103e50;
+  /* Old browsers */
+  background: -moz-radial-gradient(center, ellipse cover, #103e50 0%, #022735 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #103e50), color-stop(100%, #022735));
+  /* Chrome,Safari4+ */
+  background: -webkit-radial-gradient(center, ellipse cover, #103e50 0%, #022735 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-radial-gradient(center, ellipse cover, #103e50 0%, #022735 100%);
+  /* Opera 12+ */
+  background: -ms-radial-gradient(center, ellipse cover, #103e50 0%, #022735 100%);
+  /* IE10+ */
+  background: radial-gradient(ellipse at center, #103e50 0%, #022735 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#103e50', endColorstr='#022735',GradientType=1 );
+  /* IE6-9 fallback on horizontal gradient */ }
+
+#login-logo {
+  width: 150px;
+  -webkit-filter: brightness(2);
+  margin-top: 8%;
+  margin-bottom: 2%; }
+
+#flex-box {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  height: 100%; }
+
+#login-box {
+  min-width: 320px;
+  min-height: 320px;
+  width: 20%;
+  height: 34%;
+  box-sizing: border-box;
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
+  /* border: solid 3px #669999; */ }
+
+.login-form input[type="text"], .login-form input[type="password"], .login-form input[type="button"] {
+  font: normal 17px 'Lato', sans-serif;
+  padding: 8px;
+  border-radius: 5px; }
+
+.login-form input[type="text"], .login-form input[type="password"] {
+  margin-top: 15px;
+  border: solid 2px #669999;
+  background: #27586B;
+  width: 70%;
+  color: white; }
+
+.login-form input[type="button"] {
+  margin-top: 25px;
+  border: none;
+  background: white;
+  width: 30%;
+  color: #0D4D4D; }
+
+::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.7); }

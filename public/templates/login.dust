@@ -1,0 +1,25 @@
+{>"layouts/master" /}
+
+{<title} Login {/title}
+
+{<body}
+	<div id="flex-box">
+		
+		<div id="login-box">
+	
+			<img id="login-logo" src="/images/Eagle-Logo-Light.png">
+			
+			<form action="" method="post" class="login-form">
+			
+				<input id="username" type="text" name="username" placeholder="Username" />
+				<br>
+				<input id="password" type="password" name="password" placeholder="Password" />
+				<br>
+				<input type="button" value="Login" />
+			
+			</form>
+			
+		</div>
+	
+	</div>
+{/body}

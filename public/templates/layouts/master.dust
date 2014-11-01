@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Eagle : {+title /}</title>
+    <link rel="stylesheet" href="/css/app.css" />
+	<link href="http://fonts.googleapis.com/css?family=Lato:100,200,300,400,700,900" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div id="wrapper" class="content">
+    {+body /}
+</div>
+<script data-main="/js/app" src="/components/requirejs/require.js"></script>
+</body>
+</html>
