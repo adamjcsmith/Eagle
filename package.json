@@ -22,7 +22,8 @@
 	"mysql":"*",
 	"body-parser": "*",
 	"cookie-parser": "*",
-	"express-session": "*"
+	"express-session": "*",
+	"lusca": "*"
   },
   "devDependencies": {
     "grunt": "^0.4.1",
