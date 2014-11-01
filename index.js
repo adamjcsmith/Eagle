@@ -3,12 +3,13 @@
 var http = require('http');
 var express = require('express');
 var kraken = require('kraken-js');
-
+var db = require('./lib/database');
+var lusca = require('lusca');
+var session = require('express-session');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 
 var options, app, server;
-
-
-
 
 
 /*
@@ -22,6 +23,8 @@ options = {
          * `confit` (https://github.com/krakenjs/confit/) configuration object.
          */
 		 
+		db.config(config.get('databaseConfig'));
+		 
         next(null, config);
     }
 };
@@ -29,6 +32,26 @@ options = {
 app = module.exports = express();
 app.use(kraken(options));
 
+/* Need these to use Lusca: */
+app.use(cookieParser());
+
+app.use(session({
+	secret: 'keyboard-cat',
+	resave: true,
+	saveUninitialized: true
+}));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+
+/* Lusca: */
+app.use(lusca({
+	csrf: true,
+	csp: { /* */ },
+	xframe: 'SAMEORIGIN',
+	p3p: 'ABCDEF',
+	hsts: {maxAge: 31536000, includeSubDomains: true},
+	xssProtection: true
+}));
 
 
 

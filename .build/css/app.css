@@ -41,7 +41,7 @@
   border-radius: 10px;
   /* border: solid 3px #669999; */ }
 
-.login-form input[type="text"], .login-form input[type="password"], .login-form input[type="button"] {
+.login-form input[type="text"], .login-form input[type="password"], .login-form input[type="submit"] {
   font: normal 17px 'Lato', sans-serif;
   padding: 8px;
   border-radius: 5px; }
@@ -53,7 +53,7 @@
   width: 70%;
   color: white; }
 
-.login-form input[type="button"] {
+.login-form input[type="submit"] {
   margin-top: 25px;
   border: none;
   background: white;

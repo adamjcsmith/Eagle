@@ -9,13 +9,17 @@
 	
 			<img id="login-logo" src="/images/Eagle-Logo-Light.png">
 			
-			<form action="" method="post" class="login-form">
+			<form method="post" class="login-form">
+			
+				<input type="hidden" value="{_csrf}" name="_csrf" />			
 			
 				<input id="username" type="text" name="username" placeholder="Username" />
 				<br>
 				<input id="password" type="password" name="password" placeholder="Password" />
 				<br>
-				<input type="button" value="Login" />
+				<input type="submit" name="submit" value="Login" />
+				
+
 			
 			</form>
 			

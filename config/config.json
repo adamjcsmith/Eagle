@@ -23,6 +23,11 @@
             }
         }
     },
+	
+	"databaseConfig": {
+        "host": "localhost",
+        "database": "shocart"
+    },
     
 
     "i18n": {

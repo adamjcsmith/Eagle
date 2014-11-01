@@ -14,5 +14,15 @@ module.exports = function (router) {
         res.render('login', model);
         
     });
+	
+	router.post('/', function(req, res) {
+	
+		var username = req.body.username;
+	
+		req.session.username = username;
+	
+		res.send("Hello " + username + "!");
+	
+	});
 
 };
