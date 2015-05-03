@@ -1,6 +1,6 @@
 {
   "name": "eagle",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Exam Analysis Graphing Layout Engine",
   "author": "Adam Smith",
   "main": "index.js",
@@ -12,7 +12,7 @@
   "dependencies": {
     "adaro": "^0.1.5",
     "dustjs-helpers": "^1.2.0",
-    "dustjs-linkedin": "^2.3.6",
+    "dustjs-linkedin": "2.6.*",
     "engine-munger": "^0.2.0",
     "express": "^4.3.0",
     "kraken-devtools": "^1.0.0",
@@ -24,7 +24,13 @@
 	"body-parser": "*",
 	"cookie-parser": "*",
 	"express-session": "*",
-	"lusca": "*"
+	"lusca": "*",
+	"mongodb": "*",
+	"mongoose": "*",
+	"monk": "*",
+	"socket.io": "*",
+	"async-waterfall": "*",
+	"mongo-fast-join": "*"
   },
   "devDependencies": {
     "grunt": "^0.4.1",
