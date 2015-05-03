@@ -16,13 +16,14 @@
   background: radial-gradient(ellipse at center, #103e50 0%, #022735 100%);
   /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#103e50', endColorstr='#022735',GradientType=1 );
-  /* IE6-9 fallback on horizontal gradient */ }
+  /* IE6-9 fallback on horizontal gradient */
+  background: white; }
 
 #login-logo {
-  width: 150px;
-  -webkit-filter: brightness(2);
-  margin-top: 8%;
-  margin-bottom: 2%; }
+  font: 300 35px 'Lato', sans-serif;
+  letter-spacing: 5px;
+  margin-bottom: 10px;
+  color: #5e5e5e; }
 
 #flex-box {
   justify-content: center;
@@ -39,7 +40,8 @@
   padding: 10px;
   text-align: center;
   border-radius: 10px;
-  /* border: solid 3px #669999; */ }
+  /* border: solid 3px #669999; */
+  padding-top: 3%; }
 
 .login-form input[type="text"], .login-form input[type="password"], .login-form input[type="submit"] {
   font: normal 17px 'Lato', sans-serif;
@@ -48,17 +50,16 @@
 
 .login-form input[type="text"], .login-form input[type="password"] {
   margin-top: 15px;
-  border: solid 2px #669999;
-  background: #27586B;
+  border: solid 2px #730e54;
   width: 70%;
-  color: white; }
+  color: #730e54; }
 
 .login-form input[type="submit"] {
   margin-top: 25px;
   border: none;
-  background: white;
+  background: #730e54;
   width: 30%;
-  color: #0D4D4D; }
+  color: white; }
 
 ::-webkit-input-placeholder {
   color: rgba(255, 255, 255, 0.7); }

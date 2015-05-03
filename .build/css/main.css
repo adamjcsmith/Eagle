@@ -1,0 +1,479 @@
+* {
+  font-family: 'Lato', sans-serif;
+  margin: 0;
+  padding: 0; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  touch-action: none;
+  /* background: rgba(115,14,84, 0.0); */ }
+
+/* UI Framework */
+#sidebar {
+  width: 20%;
+  height: 95.6%;
+  /* background-color: rgb(185,205,229); */
+  background-color: rgba(115, 14, 84, 0.85);
+  border-right: solid 1px rgba(115, 14, 84, 0.2);
+  display: inline-block;
+  /* position: relative */
+  position: fixed;
+  z-index: 200;
+  top: 4.4%; }
+
+#mainsection {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  position: absolute; }
+
+#topbar {
+  height: 4.5%;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(115, 14, 84, 0.1); }
+
+#contentarea {
+  min-height: 95.5%;
+  box-sizing: border-box;
+  padding: 3%;
+  position: relative;
+  height: 95.5%; }
+
+/* Sidebar Specific */
+#logoarea {
+  height: 5%;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  box-sizing: border-box;
+  padding: 5px;
+  color: transparent;
+  background-image: url(/images/search.png);
+  background-repeat: no-repeat;
+  background-size: 6%;
+  background-position: 50% 47%; }
+
+.separator {
+  height: 1px;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  background-color: #730e54;
+  display: none; }
+
+.menuitem {
+  height: 10%;
+  display: block;
+  text-decoration: none;
+  background-color: rgba(115, 14, 84, 0);
+  color: white;
+  text-align: right;
+  font-size: 18px;
+  line-height: 2.7em;
+  padding: 5%;
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+  background-size: 14%;
+  background-position: 10% 47%; }
+
+.oddMenuItem {
+  background-color: rgba(255, 255, 255, 0.1); }
+
+.menuitem:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: background-color 0.3s; }
+
+.dashitem {
+  background-image: url(/images/dashboard.png); }
+
+.studentitem {
+  background-image: url(/images/student.png); }
+
+.modulesitem {
+  background-image: url(/images/modules.png); }
+
+.settingsitem {
+  background-image: url(/images/settings.png); }
+
+#sideFooter {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 30px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 10px;
+  padding: 10px; }
+
+/* Top Bar Specific */
+#menuswitch {
+  /* background-color: rgb(185,205,229); */
+  background-color: #730e54;
+  width: 3%;
+  float: left;
+  height: 100%;
+  background-image: url(/images/hamburger.png);
+  background-position: center center;
+  background-size: 40%;
+  background-repeat: no-repeat; }
+
+.toptab {
+  width: auto;
+  float: left;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  text-align: center;
+  line-height: 130%;
+  /* 1.3em */
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: -0.5px; }
+
+.activetab {
+  /*background-color: rgb(185,205,229); */
+  color: #730e54; }
+
+.inactivetab {
+  background-color: transparent;
+  color: rgba(0, 0, 0, 0.5); }
+
+select {
+  float: right;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  text-align: center;
+  line-height: 150%;
+  text-decoration: none;
+  font-size: 14px;
+  border: none;
+  border-left: 1px solid rgba(115, 14, 84, 0.1); }
+
+/* Content Area Specific */
+h1, h2, h3, h4, h5, h6 {
+  color: rgba(0, 0, 0, 0.7); }
+
+/* Chart Specific */
+.ringchart {
+  /*width: 900px; height: 600px;*/
+  position: relative; }
+
+#infobar {
+  height: 90%;
+  box-sizing: border-box;
+  display: inline-block;
+  position: absolute;
+  padding: 0 30px;
+  width: 38%; }
+
+/* Lists */
+.list-item {
+  width: 100%;
+  font: 400 17px 'Lato', sans-serif;
+  margin-bottom: 3%;
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #730e54;
+  box-sizing: border-box;
+  border: solid 1px rgba(115, 14, 84, 0);
+  /* border: solid 1px rgba(0,180,0, 0.2); */
+  background: rgba(115, 14, 84, 0);
+  border-radius: 10px;
+  text-align: left; }
+
+.list-item:hover {
+  background-color: rgba(115, 14, 84, 0.1);
+  transition: all 0.3s; }
+
+/* Detail Boxes */
+#student-details, #component-details, #extended-statistics, #workflow-controller {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 20px 0;
+  padding: 20px;
+  padding-top: 0;
+  /* border: 1px solid rgba(115,14,84, 0.5); */ }
+
+#student-details {
+  display: none;
+  padding-top: 43%; }
+
+#component-details {
+  padding-top: 10%; }
+
+#workflow-controller {
+  width: 25%;
+  display: inline-block; }
+
+/* Insight Specific */
+.insightSquare {
+  width: 29%;
+  margin-left: 1.5%;
+  margin-right: 1.5%;
+  margin-top: 20px;
+  height: 60px;
+  background-color: #d7e4bd;
+  box-sizing: border-box;
+  padding: 5%;
+  line-height: 20px;
+  font-size: 25px;
+  display: inline-block;
+  border-radius: 10px;
+  pointer-events: none; }
+
+.staticSquare {
+  background-color: #f2f2f2; }
+
+.insightLabel {
+  width: 30%;
+  margin-left: 1.5%;
+  margin-right: 1.5%;
+  padding-top: 15px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  font-size: 14px;
+  display: inline-block; }
+
+.insightButton {
+  width: 40%;
+  margin-top: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 20px;
+  display: inline-block;
+  background-color: transparent;
+  border: 1px solid rgba(115, 14, 84, 0.5);
+  color: #730e54;
+  text-decoration: none; }
+
+.buttonDown {
+  color: white !important;
+  background-color: rgba(115, 14, 84, 0.5) !important; }
+
+.miniButton {
+  width: auto;
+  font-size: 18px;
+  text-align: center;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-top: 0;
+  margin-right: 3%;
+  background-color: transparent;
+  color: #730e54;
+  text-decoration: none;
+  border: 1px solid rgba(115, 14, 84, 0.5);
+  font-size: 16px; }
+
+.disabledButton {
+  color: #cccccc;
+  border: 1px solid rgba(115, 14, 84, 0.1); }
+
+.button-lock {
+  margin-left: 0;
+  margin-right: 5%;
+  width: 40%; }
+
+.button-viewdetails {
+  margin-right: 0;
+  margin-left: 0;
+  width: 50%; }
+
+.dividerline {
+  margin: 10px 0;
+  display: block;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.1); }
+
+.cleardivider {
+  margin: 10px 0;
+  display: block;
+  height: 2px;
+  background-color: rgba(115, 14, 84, 0.5); }
+
+/* WorkFlow */
+.workflow-element {
+  display: inline-block;
+  width: 6%;
+  height: 6%;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+  box-sizing: border-box;
+  padding: 10px;
+  opacity: 0;
+  margin: 1%;
+  vertical-align: middle;
+  position: relative;
+  pointer-events: all; }
+
+.marginalFailBox {
+  background-color: rgba(255, 165, 0, 0.5); }
+
+.failBox {
+  background-color: rgba(255, 0, 0, 0.5); }
+
+/*
+.workflow-element:hover {
+	background-color: #5e5e5e;
+	transition: background-color 0.3s;
+}
+*/
+#workflow-menuswitch {
+  /* background-color: rgb(185,205,229); */
+  width: 3%;
+  float: right;
+  height: 100%;
+  background-image: url(/images/toolView.png);
+  background-position: center center;
+  background-size: 60%;
+  background-repeat: no-repeat;
+  border-left: 1px solid rgba(115, 14, 84, 0.1); }
+
+#workflow-sidemenu {
+  width: 20%;
+  height: 95.5%;
+  /* NEW STUFF */
+  width: 97.1%;
+  height: auto;
+  /* background-color: rgb(185,205,229); */
+  background-color: rgba(255, 255, 255, 0.9);
+  border-bottom: solid 1px rgba(185, 205, 229, 0.5);
+  display: none;
+  /* position: relative */
+  position: fixed;
+  z-index: 200;
+  top: 4.5%;
+  opacity: 0.9;
+  right: 0;
+  left: 0;
+  padding: 20px; }
+
+#workflow-name {
+  float: right;
+  height: 100%;
+  padding: 9px;
+  margin-right: 10px;
+  pointer-events: none; }
+
+#workflow-viewtoggle {
+  width: 3%;
+  float: right;
+  height: 100%;
+  background-image: url(/images/flowview.png);
+  background-position: center center;
+  background-size: 60%;
+  background-repeat: no-repeat;
+  border-left: 1px solid rgba(115, 14, 84, 0.1); }
+
+#ringView {
+  width: 3%;
+  float: right;
+  height: 100%;
+  background-image: url(/images/ringView.png);
+  background-position: center center;
+  background-size: 60%;
+  background-repeat: no-repeat;
+  border-left: 1px solid rgba(115, 14, 84, 0.1); }
+
+#ringView:hover, #workflow-viewtoggle:hover, #workflow-menuswitch:hover {
+  background-color: rgba(115, 14, 84, 0.1);
+  transition: background-color 0.3s; }
+
+/* INNER VIEW  */
+#innerBox {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box; }
+
+#innerLeft {
+  width: 60%;
+  display: inline-block;
+  height: 100%;
+  text-align: left;
+  vertical-align: top; }
+
+#innerRight {
+  width: 40%;
+  display: inline-block;
+  height: 100%;
+  text-align: right;
+  vertical-align: top; }
+
+#innerRightTop {
+  width: 100%;
+  display: inline-block; }
+
+#innerRightMain {
+  width: 100%;
+  display: inline-block; }
+
+#innerName {
+  font-size: 30px;
+  font-weight: 300; }
+
+#innerSubtitle {
+  font-size: 16px;
+  margin-top: 2%; }
+
+#innerHeader {
+  font-size: 20px;
+  margin-top: 8%;
+  font-weight: 300; }
+
+#innerTable {
+  margin-top: 3%;
+  margin-bottom: 10%;
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  font-size: 19px; }
+
+th, td {
+  padding: 15px;
+  text-align: center;
+  border: 1px solid #ccc; }
+
+#floatingBox {
+  position: absolute;
+  right: 0;
+  top: 18px;
+  width: 50%;
+  display: none;
+  text-align: right; }
+
+#mini-ringButton, #mini-workflowButton {
+  background-image: url(/images/ringView.png);
+  background-position: center center;
+  background-size: 60%;
+  background-repeat: no-repeat;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: transparent;
+  box-sizing: border-box; }
+
+#mini-workflowButton {
+  background-image: url(/images/flowView.png); }
+
+.workflow-studentsection {
+  width: 100%;
+  display: block;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  /* margin-bottom: 3%; */
+  background-color: white;
+  border-bottom: 1px solid rgba(115, 14, 84, 0.1); }
+
+.workflow-studentsection-detailsarea {
+  width: 30%;
+  height: 100%;
+  display: inline-block;
+  left: 0;
+  vertical-align: middle;
+  text-align: left; }
+
+.dashboardSquare {
+  text-align: center;
+  line-height: 5px;
+  font-size: 35px;
+  background-color: transparent;
+  color: #730e54; }

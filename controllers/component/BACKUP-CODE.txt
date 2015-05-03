@@ -1,0 +1,132 @@
+	
+/* ---------------------- VERSION TWO ----------------------- */	
+	
+// Give a failcounter element to each markdata thing:
+	for(var i=0; i<marksdocs.length; i++) {
+		marksdocs[i].failCounter = 0;
+	}
+				
+	for(var i=0; i<marksdocs.length; i++) {	
+		
+		(function(i) {
+			waterfall([
+				function(callback) {
+					Markz.find({}, {}, function(error, marksdocs) {
+						// Return marks:
+						callback(null, marksdocs);					
+					})									
+				},
+				function(markdata, callback) {
+					
+					for(var q=0; q<markdata.length; q++) {
+						if((markdata[q].studentID == marksdocs[i].studentID) && (markdata[q].rawResult < 40)) {
+							callback(null, markdata[q].componentID, req.type);
+						}
+					}
+					
+				},
+				function(compID, type, callback) {
+					ComponentModel.find({_id: compID, type: type}, {}, function(error, compdocs) {
+						if(compdocs.length > 0) callback(null, compdocs[0].series);
+					})
+				},
+				function(seriesID) {
+					
+					SeriesModel.find({_id: seriesID, startYear: currentYear}, {}, function(error, seriesdocs) {
+						if(seriesdocs.length > 0) {
+							marksdocs[i].failCounter++;
+						}											
+						
+					})
+					
+				}
+			
+			], console.log("done"));
+		
+		}(i));
+	}	
+	
+	
+	
+	
+	
+	
+	
+	
+/* ---------------------- VERSION ONE ----------------------- */	
+	
+	Markz.find({}, {}, function(error, allmarks) {
+		
+		var w = 0;
+		var y = 0;
+		
+		//for(var w=0; w<allmarks.length; w++) {
+			//var theStudentID = allmarks[w].studentID;
+			console.log("-------------------------------------------");
+
+			var resultCounter = 0;
+			var failCounter = 0;
+			
+			for(y=0; y<allmarks.length; y++) {
+				
+				// Closure function:
+				(function(y) {
+				
+				
+				if((parseInt(allmarks[y].rawResult) < 40)) {
+					//console.log("Found a failed mark for :" + theStudentID);
+					//var tempStudentID = allmarks[y].studentID;
+					
+					// Check if it's a component with the same type:
+					var theComponentID = allmarks[y].componentID;
+					
+					console.log("Identified failed mark for: " + allmarks[y].componentID);									
+					ComponentModel.find({_id: theComponentID, type: req.type}, {}, function(error, allcomps) {
+						
+						if(allcomps.length > 0) {
+							
+							console.log("Succeeded CompModel test");
+							
+							SeriesModel.find({_id: allcomps[0].series, startYear: currentYear}, {}, function(error, seriesresult) {
+								
+								//console.log("allcomps[0]: " + allcomps[0]._id + " and currentYear: " + currentYear);
+								
+								console.log("Trying to find series: " + allcomps[0].series + "and year: " + currentYear);
+								
+								if(seriesresult.length > 0) {
+									//console.log("Failed module found!!!!!!!!!!!!!!!!!!!! for " + " with " + allcomps[0]._id);
+									
+									//console.log("Student " + theStudentID + " has a failed module in: " + seriesresult[0].module);
+									
+									for(var q=0; q<seriesresult.length; q++) {
+										console.log("Student " + allmarks[y].studentID +  "has a failed module in: " + seriesresult[q].module);
+										
+										// Add stuff to the marks variable here...
+										
+										failCounter++;
+										
+									}
+									
+								}
+							})												
+						}
+						
+						// Finally check if it's from the same year...
+					})
+				}
+				
+				
+				
+				}(y))
+				
+				
+				
+				
+			}
+			
+			
+			console.log(failCounter);
+			
+
+		//}							
+	})

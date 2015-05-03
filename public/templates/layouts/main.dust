@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>{+title /} : Eagle</title>
+	
+	<!-- jQuery + jQuery UI -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+	
+	<!-- Style Sheets -->
+    <link rel="stylesheet" href="/css/main.css" />
+	<link href="http://fonts.googleapis.com/css?family=Lato:100,200,300,400,700,900" rel="stylesheet" type="text/css">	
+	
+	<!-- Mobile Scaling -->
+	<meta name="viewport" content="initial-scale=1, minimum-scale=1, maximum-scale=1, width=device-width, target-densitydpi=device-dpi">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	
+	<!-- JavaScripts -->
+	<script src="/js/fastclick.js"></script>
+	<script src="/js/watch.js"></script>
+	<script src="/js/chartJS/Chart.js"></script>
+	<script src="/js/hammer.min.js"></script>
+	<script src="/js/chosen/chosen.jquery.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="/js/chosen/chosen.css">
+	<script src="/js/jquery.hammer.js"></script>
+
+	<style>
+	.chosen-container-single .chosen-single {
+		height: 100%;
+		background: transparent;
+		border: none;
+		box-shadow: none;
+		font-size: 14px;
+		padding-top: 7px;
+	}
+	
+	.chosen-container {
+		height: 100%;
+		float: right;
+		border-left: rgba(115,14,84, 0.1);
+	}
+	
+	.chosen-container-single .chosen-single div {
+		padding-top: 7px;
+	}
+	
+	.chosen-container .chosen-drop {
+		box-shadow: none;
+	}
+	
+	.chosen-container-active.chosen-with-drop .chosen-single {
+		border: none;
+		background: transparent;
+	}
+	</style>
+
+</head>
+<body>
+	<div id="sidebar" style="display: none;">
+		<div id="logoarea">TEST</div>
+		
+		<div class="separator"></div>
+		<a class="menuitem dashitem" href="/dashboard/">Dashboard</a>
+		<div class="separator"></div>
+		<a class="menuitem oddMenuItem studentitem" href="/student/">Students</a>
+		<div class="separator"></div>
+		<a class="menuitem modulesitem" href="/module/">Modules</a>
+		<div class="separator"></div>	
+		<a class="menuitem oddMenuItem settingsitem" href="#" onclick="alert('Settings will be added in a future release.')">Settings</a>
+		<div class="separator"></div>
+		<a class="menuitem" style="position: absolute; bottom: 50px; width: 100%;" href="/login">Log Out</a>
+
+		<div id="sideFooter">&copy Eagle 2014-2015. <br> All data held is confidential and must not be disclosed.</div>
+	</div>
+	
+	<div id="mainsection">
+		<div id="topbar">
+			<a id="menuswitch" href="#" onclick="openMenu();"></a>
+			<a class="toptab activetab" id="pagetitle" href="{+sectionurl /}">{+sectionname /}</a>
+			
+			<!-- Conditional Tabs here -->
+			{#pages}
+				<a class="toptab inactivetab" href="{+sectionurl /}/{link}">{name}</a>{~n}			
+			{/pages}
+			
+			<!-- Controller Tabs here -->
+				<select id="seriesselect" style="height:100%;">
+					<option value="2014">Compare</option>
+					<option value="2013">2013</option>
+					<option value="2012">2012</option>
+					<option value="2011">2011</option>
+				</select> 
+
+				<a id="workflow-viewtoggle" href="{+workflowlink /}"></a>
+				<a id="ringView" class="ringView" href="{+ringlink /}"></a>			
+				<div id="workflow-menuswitch" onClick="openWorkflowMenu()"></div>		
+			
+			{+controltabs /}
+			
+		</div>
+		<div id="contentarea">
+		    {+body /}
+		</div>
+	</div>
+	
+
+<script data-main="/js/app" src="/components/requirejs/require.js"></script>
+
+	<script>
+	
+	$('body').click(function(event) {
+		if(event.target.id != 'menuswitch' && event.target.id != 'workflow-menuswitch' && event.target.id != 'workflow-sidemenu')
+			closeSidebar();
+	});
+	
+	function openMenu() {
+		/*
+		$( '#sidebar' ).toggle( 'slide', 200 );
+		var mainsec = document.getElementById('mainsection');
+		var button = document.getElementById('menuswitch');
+
+		if(mainsec.style.width == "") {
+			mainsec.style.width = "80%";
+		}
+		else if(mainsec.style.width == "80%") {
+			mainsec.style.width = "100%";
+			button.style.width = '4%';
+		}
+		else {
+			mainsec.style.width = "80%";
+			button.style.width = '5%';
+		}
+		*/
+		
+		$('#sidebar').fadeToggle(200);
+	}
+	
+	
+	function closeSidebar() {
+		$('#sidebar').fadeOut(200);
+		$('#workflow-sidemenu').fadeOut(200);
+	}
+	
+	$("#seriesselect").chosen({});
+
+
+	
+	</script>
+	
+	<script>
+	<!-- Activate FastClick -->
+	$(function() {
+		FastClick.attach(document.body);
+	});
+	</script>
+</body>
+</html>

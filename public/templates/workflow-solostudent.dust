@@ -1,0 +1,117 @@
+<!doctype html>
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+	
+	<!-- jQuery + jQuery UI -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+	
+	<!-- Style Sheets -->
+    <link rel="stylesheet" href="/css/main.css" />
+	<link href="http://fonts.googleapis.com/css?family=Lato:100,200,300,400,700,900" rel="stylesheet" type="text/css">	
+	
+	<!-- Mobile Scaling -->
+	<meta name="viewport" content="initial-scale=1, minimum-scale=1, maximum-scale=1, width=device-width, target-densitydpi=device-dpi">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+
+	<div id= "workflow-view" style="touch-action: pan-y !important; width: 100%; display: inline-block; height: 730px;  padding-top: 23%; vertical-align: top; position: relative; text-align: center; overflow-y: scroll; overflow-x: hidden; -ms-overflow-style: none; ">
+	
+	
+	
+	</div>
+	
+	<script src="/js/charts/workflow-menu.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.3.3.js"></script>
+	</head>
+<body>	
+	<div id="workflow-sidemenu">
+		
+		<div id="placeholder" style="text-align: center; width: 100%; height: 100%; display: none;">
+			<h3 style="font-weight: 400; padding: 10px 0;">Settings aren't available in the inner view.</h3>
+		</div>
+	
+	</div>
+	
+	
+	<script>
+
+	
+		var instanceMode = "{mode}";	
+	
+		function openWorkflowMenu() {
+				
+			if(instanceMode == 'student') return;				
+				
+			$('#workflow-sidemenu').fadeToggle(200);
+			
+			if(open ==1) {
+				$('#innercontrols').css("display", "none");
+				$('#placeholder').fadeIn(500);
+			}
+			else {
+				$('#placeholder').css("display", "none");
+				$('#innercontrols').fadeIn(500);				
+			}
+		
+		}
+	
+	
+		var newData;
+		var markData = [{marks}];
+		
+		var contextualStuff = "{#context}{fullname}{/context}";
+		
+		var socket = io();	
+	
+		$( document ).ready(function() {
+		
+			var theChart = prepareWorkflow(markData, instanceMode);
+			
+			$('#seriesselect_chosen').css("display", "none");
+			
+			
+			
+			if(instanceMode == 'student') {
+				document.getElementById('pagetitle').innerHTML = contextualStuff;
+			}
+			
+
+			
+			
+		});  
+		
+		
+		
+		
+		
+		/* INSIGHT VARIABLES */
+		
+		//var ctx = document.getElementById("myChart").getContext("2d");
+		//var myBarChart = new Chart(ctx).Bar([], options);	
+		
+		// Edit data for ChartJS format:
+		
+		
+		// Watch for changes:
+		/*
+		watch(dataTracker, function(){
+			bars.redraw();
+			ring.redraw();
+			alert("Test!");
+		});
+		*/
+		
+		var seriesmenu = document.getElementById("seriesmenu");
+		seriesmenu.onchange=function(){
+			var selected = this.options[this.selectedIndex];
+			alert(selected.value);
+		}
+		
+	</script>
+	</body>
+</html>

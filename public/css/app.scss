@@ -1,13 +1,17 @@
 #wrapper, body, html { height: 100%; margin: 0; background: #103e50; /* Old browsers */
+
 background: -moz-radial-gradient(center, ellipse cover, #103e50 0%, #022735 100%); /* FF3.6+ */
 background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#103e50), color-stop(100%,#022735)); /* Chrome,Safari4+ */
 background: -webkit-radial-gradient(center, ellipse cover, #103e50 0%,#022735 100%); /* Chrome10+,Safari5.1+ */
 background: -o-radial-gradient(center, ellipse cover, #103e50 0%,#022735 100%); /* Opera 12+ */
 background: -ms-radial-gradient(center, ellipse cover, #103e50 0%,#022735 100%); /* IE10+ */
 background: radial-gradient(ellipse at center, #103e50 0%,#022735 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#103e50', endColorstr='#022735',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */}
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#103e50', endColorstr='#022735',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
-#login-logo { width: 150px; -webkit-filter: brightness(2); margin-top: 8%; margin-bottom: 2%;}
+background: white;
+}
+
+#login-logo { font: 300 35px 'Lato', sans-serif;  letter-spacing: 5px; margin-bottom: 10px; color: #5e5e5e; }
 
 #flex-box {
 	justify-content: center;
@@ -17,6 +21,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#103e50', end
 }
 
 #login-box {
+
 	min-width: 320px;
 	min-height: 320px;
 	width: 20%;
@@ -26,6 +31,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#103e50', end
 	text-align: center;
 	border-radius: 10px;
 	/* border: solid 3px #669999; */
+	padding-top: 3%;
 }
 
 .login-form input[type="text"], .login-form input[type="password"], .login-form input[type="submit"] {
@@ -36,18 +42,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#103e50', end
 
 .login-form input[type="text"], .login-form input[type="password"] {
 	margin-top: 15px;
-	border: solid 2px #669999;
-	background: #27586B;
+	border: solid 2px #730e54;
 	width: 70%;
-	color: white;
+	color: #730e54;
 }
 
 .login-form input[type="submit"] {
 	margin-top: 25px;
 	border: none;
-	background: white;
+	background: #730e54;
 	width: 30%;
-	color: #0D4D4D;
+	color: white;
 }
 
 ::-webkit-input-placeholder { color: rgba(255,255,255,0.7); }

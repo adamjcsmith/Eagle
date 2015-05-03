@@ -1,0 +1,193 @@
+<!doctype html>
+
+<title></title>
+
+<!-- Style Sheets -->
+<link rel="stylesheet" href="/css/main.css" />
+<link href="http://fonts.googleapis.com/css?family=Lato:100,200,300,400,700,900" rel="stylesheet" type="text/css">	
+
+<!-- jQuery -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+	<script src="/js/chartJS/Chart.js"></script>
+
+<body>
+	
+	<div id='innerBox' style="text-align: center; padding-top: 14%;">
+	
+	
+		<a class="insightButton miniButton" href="fullview" style="padding: 10%; font-size: 30px;">Details</a>
+	
+		<a class="insightButton miniButton" href="workflow" style="padding: 10%; font-size: 30px;">Flow</a>
+	
+	
+	
+	</div>
+	
+	
+	
+	<script>
+		var markData = [{marks}];
+		var modules = []; 
+		var moduleCodes = [];
+		
+		var examMarkArray = [];
+		var cwkMarkArray = [];
+	
+		var examWeightingsArray = [];
+		var cwkWeightingsArray = [];
+		
+		var moduleCreditArray = [];
+		
+		$( document ).ready(function() { 
+		
+		var data = {
+			labels: ["1st", "2:1", "2:2", "3rd", "Fail"],
+			datasets: [
+				{
+					label: "2014",
+					fillColor: "rgba(220,220,220,0.2)",
+					strokeColor: "rgba(220,220,220,1)",
+					pointColor: "rgba(220,220,220,1)",
+					pointStrokeColor: "#fff",
+					pointHighlightFill: "#fff",
+					pointHighlightStroke: "rgba(220,220,220,1)",
+					data: [65, 59, 90, 81, 56]
+				},
+				{
+					label: "2013",
+					fillColor: "rgba(151,187,205,0.2)",
+					strokeColor: "rgba(151,187,205,1)",
+					pointColor: "rgba(151,187,205,1)",
+					pointStrokeColor: "#fff",
+					pointHighlightFill: "#fff",
+					pointHighlightStroke: "rgba(151,187,205,1)",
+					data: [28, 48, 40, 19, 96]
+				}
+			]
+		};
+		
+			var ctx = document.getElementById("myRadarChart").getContext("2d");
+			var myRadarChart = new Chart(ctx).Radar(data, {});				
+			
+		
+		});				
+		
+		
+		
+	
+		for(var i=0; i<markData.length; i++) {
+		
+			if(modules.indexOf(markData[i].moduleID) > -1) {
+
+			}
+			else {
+				modules.push(markData[i].moduleID);	
+				moduleCodes.push(markData[i].moduleCode);
+			}
+		
+		}
+
+		
+		for(var i=0; i<modules.length; i++) {
+		
+			document.getElementById('innerTableHeadRow').innerHTML += "<th>" + moduleCodes[i] +"</th>";
+		
+			var cwkMarks = 0;
+			var cwkMarkCount = 0;
+			var examMarks = 0;
+			var examMarkCount = 0;				
+		
+			for(var k=0; k<markData.length; k++) {
+			
+				if(markData[k].type == "Exam" && markData[k].moduleID == modules[i]) {
+						examMarks += markData[k].rawResult;
+						examMarkCount++;
+						examWeightingsArray.push(markData[k].weighting);
+				}
+				
+				if(markData[k].type == "Coursework" && markData[k].moduleID == modules[i]) {
+						cwkMarks += markData[k].rawResult;
+						cwkMarkCount++;
+						cwkWeightingsArray.push(markData[k].weighting);
+				}				
+			
+			}
+			
+			examMarkArray.push(examMarks / examMarkCount);
+			cwkMarkArray.push(cwkMarks / cwkMarkCount);
+			
+		}
+		
+		
+		
+		
+		for(var i=0; i<examMarkArray.length; i++) {
+		
+			if(isNaN(examMarkArray[i])) {
+				document.getElementById('examMarksRow').innerHTML += "<td> / </td>";
+			}
+			else {
+				document.getElementById('examMarksRow').innerHTML += "<td>" + examMarkArray[i] +"</td>";			
+			}
+		
+
+		}
+		
+		for(var i=0; i<cwkMarkArray.length; i++) {
+		
+			if(isNaN(cwkMarkArray[i])) {
+				document.getElementById('cwkMarksRow').innerHTML += "<td> / </td>";				
+			}
+			else {
+				document.getElementById('cwkMarksRow').innerHTML += "<td>" + cwkMarkArray[i] +"</td>";			
+			}
+		
+		
+
+		}
+		
+		for(var i=0; i<examWeightingsArray.length; i++) {
+			examWeightingsArray[i] = (examMarkArray[i] / 100) * examWeightingsArray[i] * 15;
+		}
+
+		for(var i=0; i<cwkWeightingsArray.length; i++) {
+			cwkWeightingsArray[i] = (cwkMarkArray[i] / 100) * cwkWeightingsArray[i] * 15;
+		}		
+		
+		
+		var examTotal = 0;
+		var cwkTotal = 0;
+		
+		for(var i=0; i<examWeightingsArray[i]; i++) {
+			examTotal += examWeightingsArray[i];
+		}
+		
+		for(var i=0; i<cwkWeightingsArray[i]; i++) {
+			cwkTotal += cwkWeightingsArray[i];
+		}
+		
+		
+
+		for(var i=0; i<modules.length; i++) {
+			document.getElementById('weightedTotalRow').innerHTML += "<td>" + (examTotal + cwkTotal).toFixed(1) +"</td>";
+			document.getElementById('classificationRow').innerHTML += "<td>" + "1st" +"</td>";
+		}
+		
+		
+		function writeSquare(value, type) {
+		
+		
+		}
+
+			
+		
+	
+	</script>
+
+	
+	
+</body>
+
+</html>

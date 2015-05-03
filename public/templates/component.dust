@@ -1,0 +1,310 @@
+{>"layouts/main" /}
+
+{<title} {#context} {code}/{name} {type}{/context} {/title}
+
+{<sectionurl}/component/{#context}{_id}{/context}{/sectionurl}
+
+{<sectionname} {#context} {code}/{name} : {type}{/context} {/sectionname}
+
+
+{<controltabs}
+{/controltabs}
+
+
+
+{<workflowlink}/component/{#context}{_id}{/context}/workflow{/workflowlink}
+
+
+{<body}
+
+	<canvas id="ringcanvas" class="ringchart"></canvas>	
+	
+
+	<div style="width: auto; height: 100%; background-color: #f2f2f2; display: inline-block;">
+		<h2 id="currentScale" style="display: none;">Scale Factor: 1.00</h2>
+	</div>
+		
+	<script src="/js/charts/ring5.js"></script>	
+	<!--<script src="/js/charts/distro-bar.js"></script> -->
+	<script src="https://cdn.socket.io/socket.io-1.3.3.js"></script>
+	
+	<div id="infobar" style="text-align: center;">
+	
+	
+		<div id="component-details">
+		
+			<canvas id="myChart" width="380" height="250" style="margin-bottom: 20px; display: none;"></canvas>
+			
+			<div class="dividerline"></div>			
+			
+			<div class="insightSquare staticSquare" id="insightStudentsSat">No.SS</div>	
+			<div class="insightSquare" id="insightAggregate">AGG</div>	
+			<div class="insightSquare" id="insightAverageMark">oAVG</div>	
+
+			<div style="clear: both;"></div>
+
+			
+			<div class="insightLabel">Students Sat</div>
+			<div class="insightLabel">Avg. Aggregate</div>
+			<div class="insightLabel">Avg. Mark</div>
+
+			<div style="clear: both;"></div>	
+			
+		</div>	
+		
+		<div id="extended-statistics">
+		
+			<div class="dividerline"></div>	
+			<div class="insightSquare staticSquare" id="insightStandardDev">StDV</div>
+			<div class="insightSquare staticSquare" id="insightFailStudents">FaNo</div>
+			<div class="insightSquare staticSquare" id="insightSuggestedScale">1.00x</div>
+			
+			<div style="clear: both;"></div>
+			
+			<div class="insightLabel">Std. Deviation</div>
+			<div class="insightLabel">No. of Fails</div>
+			<div class="insightLabel">Scale Factor</div>			
+			
+		
+		</div>
+	
+	
+		<div id="student-details">
+			<h3 id="student-name">Test Student</h3>
+
+			<div class="dividerline"></div>			
+			
+			<div class="insightSquare" id="insightMark">MARK</div>
+			<div class="insightSquare" id="insightFailCount">FAIL</div>
+			<div class="insightSquare" id="insightAverage">AVG</div>
+			
+			<div style="clear: both;"></div>
+			
+			<div class="insightLabel">Result</div>
+			<div class="insightLabel">Failed {#context}{type}{/context}s</div>
+			<div class="insightLabel">Average {#context}{type}{/context}</div>
+			
+			<div style="clear: both;"></div>
+			
+			<div class="dividerline"></div>
+			
+			<a id="individualLockButton" href="#" class="insightButton button-lock">Lock</a>
+			<a id="individualDetailsButton" href="#" class="insightButton button-viewdetails">Details</a>		
+		
+		</div>	
+		
+		<div style="display: none">
+			<h4>Grade Distribution</h4>
+		
+			<h3 id="mean-aggregation" style="margin-top: 20px; font-weight: 400;">Mean Aggregation: Unknown</h3>
+			<h3 id="requires-scale" style="margin-top: 10px; font-weight: 400; display: none;">Unknownx Suggested Scale</h3>
+		</div>
+	</div>
+	
+	<script>
+	
+		var myBarChart;
+		var ctx;
+		var chartCanvas;
+		var newData;
+		var markData = [{marks}];
+		var scaleFactor = 1.00;
+		
+		var originalAggr;
+		var originalAverage;
+	
+		function setupBars() {
+			var originalData = [{marks}];
+			newData = {
+				labels: ['Fail', '3rd', '2:2', '2:1', '1:1'],
+				datasets: []
+			};
+			
+			var failDataset = {
+				label: "Fail",
+				fillColor: "rgba(115,14,84, 0.4)",
+				strokeColor: "rgba(220,220,220,0)",
+				highlightFill: "rgba(115,14,84, 0.6)",
+				highlightStroke: "rgba(220,220,220,0)",
+				data: []
+			};
+			
+			var failCounter = 0;
+			var thirdCounter = 0;
+			var twotwoCounter = 0;
+			var twooneCounter = 0;
+			var firstCounter = 0;
+			var total = 0;
+			for(var i=0; i<originalData.length; i++) {
+				var result = parseInt(originalData[i]["rawResult"]);
+				
+				if(result < 40) {
+					failCounter++;
+				}
+				else {
+					if(result >= 70) {
+						firstCounter++;
+					}
+					else {
+						if(result >= 60) {
+							twooneCounter++;
+						}
+						else if(result >= 50) {
+							twotwoCounter++;
+						}
+							
+						else if(result >= 40) {
+							thirdCounter++;
+						}
+							
+					}
+				}
+				
+				total = total + result;
+			}
+			
+			failDataset["data"].push(failCounter / originalData.length);
+			failDataset["data"].push(thirdCounter / originalData.length);
+			failDataset["data"].push(twotwoCounter / originalData.length);		
+			failDataset["data"].push(twooneCounter / originalData.length);		
+			failDataset["data"].push(firstCounter / originalData.length);				
+			
+			newData["datasets"].push(failDataset);
+			/*newData["datasets"].push(thirdDataset);
+			newData["datasets"].push(twotwoDataset);
+			newData["datasets"].push(twooneDataset);
+			newData["datasets"].push(firstDataset);		*/
+			
+			var meanAggr = ( (total/originalData.length)/100*24).toFixed(1);
+			document.getElementById('mean-aggregation').innerHTML = "Mean Aggregation: <span id='indicator'>" + meanAggr + "</span>";
+			
+			/* STANDARD COMPONENT INSIGHTS */
+			document.getElementById('insightStudentsSat').innerHTML = markData.length;
+			document.getElementById('insightAggregate').innerHTML = meanAggr;
+			document.getElementById('insightAverageMark').innerHTML = (total/originalData.length).toFixed(1);
+			originalAggr = meanAggr;
+			originalAverage = (total/originalData.length).toFixed(1);
+			
+			/* INSIGHT COLOURS FOR STANDARD INSIGHTS */
+			if(meanAggr < 13.5 || meanAggr > 17.0) {
+				document.getElementById('insightAggregate').style.backgroundColor = 'rgba(255,0,0, 0.5)';
+				document.getElementById('insightAverageMark').style.backgroundColor = 'rgba(255,0,0, 0.5)';
+				document.getElementById('insightAggregate').style.color = 'white';
+				document.getElementById('insightAverageMark').style.color = 'white';
+			}
+			else {
+				document.getElementById('insightAggregate').style.backgroundColor = 'rgba(0, 255, 0, 0.5)';
+				document.getElementById('insightAverageMark').style.backgroundColor = 'rgba(0, 255, 0, 0.5)';
+				
+			}
+			
+			/* STANDARD DEVIATION OF THE MEAN */
+			var parallelArray = [];
+			var parallelCounter = 0;
+			for (var w = 0; w<originalData.length; w++) {
+				var result = Math.pow(originalData[w].rawResult - (total/originalData.length), 2);
+				parallelArray.push(result);
+				parallelCounter = parallelCounter + result;
+			}
+			var parallelMean = parallelCounter / parallelArray.length;
+			var standardDev = Math.sqrt(parallelMean);
+			
+			document.getElementById('insightStandardDev').innerHTML = standardDev.toFixed(1);
+			document.getElementById('insightFailStudents').innerHTML = failCounter;
+			
+			
+
+			if(meanAggr < 13.5 || meanAggr > 17.0) {
+				document.getElementById('indicator').style.color = "red";
+				document.getElementById('requires-scale').style.display = "block";
+				
+				if(meanAggr < 13.5) {
+					var finalScale = 13.5/meanAggr;
+					var additor = 56.25 - total/originalData.length;
+					document.getElementById('requires-scale').innerHTML = finalScale.toFixed(2) + "x or +" + additor.toFixed(1) + " Suggested Scale";
+				}
+			}
+			else {
+				document.getElementById('indicator').style.color = "green";
+				document.getElementById('requires-scale').style.display = "none";				
+			}
+			
+			ctx = document.getElementById("myChart").getContext("2d");
+			myBarChart = new Chart(ctx).Bar(newData, {scaleLabel: "<%=value*100%>%", multiTooltipTemplate: "<%= value*100 %>%",});				
+			
+			chartCanvas = document.getElementById("myChart");
+		
+		}
+	
+		var socket = io();	
+	
+		$( document ).ready(function() {
+			var dataTracker = [];
+		
+			$('#myChart').fadeIn(800);
+					
+			var ring = prepareRing(100,markData, dataTracker, socket);
+			setupBars();
+			
+			$("#myChart").mouseover( function() {
+				myBarChart.update();
+			}
+			);
+			
+			$("#myChart").click( 
+			function(evt){
+				var activePoints = myBarChart.getBarsAtEvent(evt);         
+				
+				var selectIndex;
+				if(activePoints[0].label == "Fail") selectIndex = 0;
+				else if(activePoints[0].label == "3rd") selectIndex = 1;
+				else if(activePoints[0].label == "2:2") selectIndex = 2;
+				else if(activePoints[0].label == "2:1") selectIndex = 3;
+				else if(activePoints[0].label == "1:1") selectIndex = 4;
+				
+				if(myBarChart.datasets[0].bars[selectIndex].fillColor == "rgba(255,0,0,0.5)") {
+					myBarChart.datasets[0].bars[selectIndex].fillColor = "rgba(128,128,128,0.5)";
+					myBarChart.datasets[0].bars[selectIndex].highlightFill = "rgba(128,128,128,0.5)";
+					lockTier(activePoints[0].label, 'unlock');
+				}
+				else {
+					myBarChart.datasets[0].bars[selectIndex].fillColor = "rgba(255,0,0,0.5)";
+					myBarChart.datasets[0].bars[selectIndex].highlightFill = "rgba(255,0,0,0.5)";
+					lockTier(activePoints[0].label, 'lock');				
+				}
+				
+				myBarChart.update();
+				
+			}
+		);  
+	
+		});
+		
+		
+		
+		/* INSIGHT VARIABLES */
+		
+		//var ctx = document.getElementById("myChart").getContext("2d");
+		//var myBarChart = new Chart(ctx).Bar([], options);	
+		
+		// Edit data for ChartJS format:
+		
+		
+		// Watch for changes:
+		/*
+		watch(dataTracker, function(){
+			bars.redraw();
+			ring.redraw();
+			alert("Test!");
+		});
+		*/
+		
+		var seriesmenu = document.getElementById("seriesmenu");
+		seriesmenu.onchange=function(){
+			var selected = this.options[this.selectedIndex];
+			alert(selected.value);
+		}
+		
+	</script>
+	
+{/body}

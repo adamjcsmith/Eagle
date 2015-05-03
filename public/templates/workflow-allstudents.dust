@@ -1,0 +1,149 @@
+{>"layouts/main" /}
+
+{<title} All Students {/title}
+
+{<sectionurl}/student{/sectionurl}
+
+{<sectionname} All Students {/sectionname}
+
+
+{<controltabs}
+
+	{<workflowlink}#{/workflowlink}
+	{<ringlink}/{mode}/{#context}{_id}{/context}/{/ringlink}
+
+{/controltabs}
+
+
+
+{<body}
+
+	<div id= "workflow-view" style="touch-action: pan-y !important; width: 100%; display: inline-block; height: 790px;  padding-top: 23%; vertical-align: top; text-align: center; overflow-y: scroll; overflow-x: hidden; -ms-overflow-style: none; ">
+
+	</div>
+	
+	<script src="/js/charts/workflow-allstudents.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.3.3.js"></script>
+	<script src="/js/velocity.js"></script>
+	
+	<div id="workflow-sidemenu">
+	
+		<div id="innercontrols">
+	
+			<div style="width: 30%; display: inline-block; margin: 0 1.66%; vertical-align: top;">
+				<h3 style="font-weight:400;">Zoom</h3>
+				
+				<div class="dividerline"></div>		
+
+				<div id="slider" style="margin-top: 10px;"></div>		
+			</div>
+			
+			<div style="width: 30%; display: inline-block; margin: 0 1.66%; vertical-align: top;">
+				<h3 id="filtertext" style="font-weight:400;">Filter Threshold : 100%</h3>
+				
+				<div class="dividerline"></div>
+				
+				<div id="filter-slider" style="margin-top: 10px;"></div>		
+			</div>
+			
+			<div style="width: 30%; display: inline-block;  margin: 0 1.66%; vertical-align: middle; text-align: center;">
+
+			
+				<a id="resetApprovedButton" href='#' class="insightButton miniButton" style="margin: 0; margin-top: 2.5%; margin-right:10px;">Reset Approved</a>
+			
+				<a id="enhancedWorkflowButton" href='#' class="insightButton miniButton" style="margin: 0; margin-top: 2.5%">Standard Highlights</a>
+					
+			
+			</div>
+		
+		</div>
+		
+		<div id="placeholder" style="text-align: center; width: 100%; height: 100%; display: none;">
+			<h3 style="font-weight: 400; padding: 10px 0;">Settings aren't available in the inner view.</h3>
+		</div>
+	
+	</div>
+	
+	
+	<script>
+
+	
+		var instanceMode = "{mode}";	
+	
+		function openWorkflowMenu() {
+				
+			if(instanceMode == 'student') return;				
+				
+			$('#workflow-sidemenu').fadeToggle(200);
+			
+			if(open ==1) {
+				$('#innercontrols').css("display", "none");
+				$('#placeholder').fadeIn(500);
+			}
+			else {
+				$('#placeholder').css("display", "none");
+				$('#innercontrols').fadeIn(500);				
+			}
+		
+		}
+	
+	
+		var newData;
+		var componentData = [{comps}];
+		var studentData = [{students}];
+		var markData = [{allmarks}];
+		var moduleData = [{mods}];
+		
+		var contextualStuff = "{#context}{fullname}{/context}";
+		
+		var socket = io();	
+	
+		$( document ).ready(function() {
+		
+			var theChart = prepareWorkflow(componentData, studentData, markData, moduleData, instanceMode);
+			
+			$('#seriesselect_chosen').css("display", "none");
+			
+			
+			
+			if(instanceMode == 'student') {
+				document.getElementById('pagetitle').innerHTML = contextualStuff;
+			
+			}
+			
+
+			
+			
+		});  
+		
+		$('#ringView').remove();
+		
+		
+		
+		/* INSIGHT VARIABLES */
+		
+		//var ctx = document.getElementById("myChart").getContext("2d");
+		//var myBarChart = new Chart(ctx).Bar([], options);	
+		
+		// Edit data for ChartJS format:
+		
+		
+		// Watch for changes:
+		/*
+		watch(dataTracker, function(){
+			bars.redraw();
+			ring.redraw();
+			alert("Test!");
+		});
+		*/
+		
+		var seriesmenu = document.getElementById("seriesmenu");
+		seriesmenu.onchange=function(){
+			var selected = this.options[this.selectedIndex];
+			alert(selected.value);
+		}
+		
+	</script>
+
+	
+{/body}

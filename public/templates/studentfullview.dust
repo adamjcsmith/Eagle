@@ -1,0 +1,225 @@
+<!doctype html>
+
+<title></title>
+
+<!-- Style Sheets -->
+<link rel="stylesheet" href="/css/main.css" />
+<link href="http://fonts.googleapis.com/css?family=Lato:100,200,300,400,700,900" rel="stylesheet" type="text/css">	
+
+<!-- jQuery -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+	<script src="/js/chartJS/Chart.js"></script>
+
+<body>
+	
+	<div id='innerBox'>
+	
+		<div id='innerLeft'>
+			<div id='innerName'>{#context}{fullname}{/context}</div>
+			<div id='innerSubtitle'>{#context}{_id} {/context} / {degreescheme}</div>
+
+			<div id='innerHeader'>2014 Student Record</div>
+			
+			<table id='innerTable'>
+				<thead id='innerTableHead'>
+					<tr id='innerTableHeadRow'>
+						<th> </th>
+					</tr>
+				</thead>
+
+				<tbody id='innerTableRows'>
+				
+					<tr id='examMarksRow'>
+						<td>Exam(s) Avg</td>
+					</tr>
+					
+					<tr id='cwkMarksRow'>
+						<td>Cwk(s) Avg</td>
+					</tr>
+					
+					<tr id='weightedTotalRow'>
+						<td>Weighted Total</td>
+					</tr>
+					
+					<tr id='classificationRow'>
+						<td>Classification</td>
+					</tr>					
+					
+					
+				</tbody>
+			</table>
+
+			<!--
+			<div class="insightSquare" style="text-align: center; height: auto;">AnAvg</div>
+			
+			
+			<div style="clear: both"></div>
+			
+			<div class="insightLabel" style="text-align: center; height: auto;">Annual Average</div>
+			
+			-->
+
+		</div>
+		
+		<div id='innerRight'>
+			
+			<canvas id="myRadarChart" width="400" height="400" style="margin-top: 20%;"></canvas>
+			
+			
+		</div>
+	
+	
+	</div>
+	
+	
+	
+	<script>
+		var markData = [{marks}];
+		var modules = [];
+		var moduleCodes = [];
+		
+		var examMarkArray = [];
+		var cwkMarkArray = [];
+	
+		var examWeightingsArray = [];
+		var cwkWeightingsArray = [];
+		
+		var moduleCreditArray = [];
+		
+		$( document ).ready(function() { 
+		
+		var data = {
+			labels: ["1st", "2:1", "2:2", "3rd", "Fail"],
+			datasets: [
+				{
+
+				},
+				{
+				
+				}
+			]
+		};
+		
+			var ctx = document.getElementById("myRadarChart").getContext("2d");
+			var myRadarChart = new Chart(ctx).Radar(data, {});				
+		});				
+		
+		
+		
+	
+		for(var i=0; i<markData.length; i++) {
+		
+			if(modules.indexOf(markData[i].moduleID) > -1) {
+
+			}
+			else {
+				modules.push(markData[i].moduleID);	
+				moduleCodes.push(markData[i].moduleCode);
+			}
+		
+		}
+
+		
+		for(var i=0; i<modules.length; i++) {
+		
+			document.getElementById('innerTableHeadRow').innerHTML += "<th>" + moduleCodes[i] +"</th>";
+		
+			var cwkMarks = 0;
+			var cwkMarkCount = 0;
+			var examMarks = 0;
+			var examMarkCount = 0;				
+		
+			for(var k=0; k<markData.length; k++) {
+			
+				if(markData[k].type == "Exam" && markData[k].moduleID == modules[i]) {
+						examMarks += markData[k].rawResult;
+						examMarkCount++;
+						examWeightingsArray.push(markData[k].weighting);
+				}
+				
+				if(markData[k].type == "Coursework" && markData[k].moduleID == modules[i]) {
+						cwkMarks += markData[k].rawResult;
+						cwkMarkCount++;
+						cwkWeightingsArray.push(markData[k].weighting);
+				}				
+			
+			}
+			
+			examMarkArray.push(examMarks / examMarkCount);
+			cwkMarkArray.push(cwkMarks / cwkMarkCount);
+			
+		}
+		
+		
+		
+		
+		for(var i=0; i<examMarkArray.length; i++) {
+		
+			if(isNaN(examMarkArray[i])) {
+				document.getElementById('examMarksRow').innerHTML += "<td> / </td>";
+			}
+			else {
+				document.getElementById('examMarksRow').innerHTML += "<td>" + examMarkArray[i] +"</td>";			
+			}
+		
+
+		}
+		
+		for(var i=0; i<cwkMarkArray.length; i++) {
+		
+			if(isNaN(cwkMarkArray[i])) {
+				document.getElementById('cwkMarksRow').innerHTML += "<td> / </td>";				
+			}
+			else {
+				document.getElementById('cwkMarksRow').innerHTML += "<td>" + cwkMarkArray[i] +"</td>";			
+			}
+		
+		
+
+		}
+		
+		for(var i=0; i<examWeightingsArray.length; i++) {
+			examWeightingsArray[i] = (examMarkArray[i] / 100) * examWeightingsArray[i] * 15;
+		}
+
+		for(var i=0; i<cwkWeightingsArray.length; i++) {
+			cwkWeightingsArray[i] = (cwkMarkArray[i] / 100) * cwkWeightingsArray[i] * 15;
+		}		
+		
+		
+		var examTotal = 0;
+		var cwkTotal = 0;
+		
+		for(var i=0; i<examWeightingsArray[i]; i++) {
+			examTotal += examWeightingsArray[i];
+		}
+		
+		for(var i=0; i<cwkWeightingsArray[i]; i++) {
+			cwkTotal += cwkWeightingsArray[i];
+		}
+		
+		
+
+		for(var i=0; i<modules.length; i++) {
+			document.getElementById('weightedTotalRow').innerHTML += "<td>" + (examTotal + cwkTotal).toFixed(1) +"</td>";
+			document.getElementById('classificationRow').innerHTML += "<td>" + "1st" +"</td>";
+		}
+		
+		
+		function writeSquare(value, type) {
+		
+		
+		}
+
+			
+		
+	
+	</script>
+
+	
+	
+</body>
+
+</html>

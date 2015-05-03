@@ -1,0 +1,18 @@
+{>"layouts/main" /}
+
+{<title} All Students {/title}
+
+{<sectionurl}/student{/sectionurl}
+
+{<sectionname}All Students{/sectionname}
+
+
+{<body}
+	
+	{#data}
+		<a class="list-item" href="{_id}">{fullname} ({_id})</a>
+	{/data}
+	
+	
+	
+{/body}

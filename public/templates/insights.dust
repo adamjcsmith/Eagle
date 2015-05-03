@@ -1,0 +1,17 @@
+{>"layouts/main" /}
+
+{<title} Dashboard {/title}
+
+{<sectionurl}/dashboard{/sectionurl}
+
+{<sectionname}Dashboard{/sectionname}
+
+
+{<body}
+
+
+	<p>Insight stuff is written here!!!!</p>
+	
+	
+	
+{/body}

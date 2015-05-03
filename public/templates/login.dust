@@ -1,4 +1,4 @@
-{>"layouts/master" /}
+{>"layouts/login" /}
 
 {<title} Login {/title}
 
@@ -7,7 +7,7 @@
 		
 		<div id="login-box">
 	
-			<img id="login-logo" src="/images/Eagle-Logo-Light.png">
+			<div id="login-logo">EAGLE</div>
 			
 			<form method="post" class="login-form">
 			
@@ -19,8 +19,6 @@
 				<br>
 				<input type="submit" name="submit" value="Login" />
 				
-
-			
 			</form>
 			
 		</div>

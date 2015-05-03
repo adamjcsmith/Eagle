@@ -1,0 +1,90 @@
+{>"layouts/main" /}
+
+{<title} Dashboard {/title}
+
+{<sectionurl}/dashboard{/sectionurl}
+
+{<sectionname}Dashboard{/sectionname}
+
+
+{<body}
+
+
+	<div style="display: inline-block; width: 70%; height: 100%;">
+		<div style="height: 70%; width: 100%; display: block; text-align: center;">
+			<h3 style="font-weight: 400;">Aggregated Annual Performance</h3>
+			<h4 style="font-weight: 400; margin-bottom: 4%;">Ranked student averages</h4>
+			<canvas id="overallLineChart" width="800" height="400"></canvas>
+		</div>
+		<div style="height: 30%; width: 90%; padding-left: 5%; display: block; text-align: center;">
+			<div class="insightSquare staticSquare dashboardSquare" id="insightStandardDev">15</div>
+			<div class="insightSquare staticSquare dashboardSquare" id="insightFailStudents">58</div>
+			<div class="insightSquare staticSquare dashboardSquare" id="insightSuggestedScale">9</div>
+			<div style="clear: both;"></div>
+			<div class="insightLabel">Students on Roll</div>
+			<div class="insightLabel">Overall Average</div>
+			<div class="insightLabel">Students with Fails</div>			
+		</div>
+	</div>
+	
+	<div style="display: inline-block; width: 30%; height: 100%; vertical-align: top; text-align: center;">
+		<h3 style="font-weight: 400;">Components</h3>
+		<h4 style="font-weight: 400; margin-bottom: 12%;">Open / 2015</h4>
+		
+		{#components}
+			<a id="{_id}" style="display: none;" class="list-item" href="/component/{_id}">{moduleCode} - {moduleName}
+			
+				<div style="clear: both"></div>
+				
+				<div style="width: 50%; display: inline-block;">
+					<h6>{title} ({startYear} Series)</h6>
+				</div>
+				<div style="width: 50%; display: inline-block; text-align: right;">
+					<h6>Avg: 15.2</h6>
+				</div>
+
+			</a>
+			
+			<div class="dividerline"></div>
+		{/components}
+		
+		
+	</div>
+	
+	<script>
+		var compDocs = [{components}];	
+
+		$( document ).ready(function() { 
+			$('#ringView').css("display", "none");
+			$('#workflow-menuswitch').css("display", "none");
+			$('#workflow-viewtoggle').css("display", "none");	
+			$('#seriesselect_chosen').css("display", "none");				
+
+			for(var i=1; i<=compDocs.length; i++) {
+				$('#' + i).delay(200).fadeIn(180*i);
+			}
+			
+		var data = {
+			labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+			datasets: [
+				{
+					label: "Student Dataset",
+					pointStrokeColor: "transparent",
+					pointHighlightFill: "#ffffff",
+					fillColor: "rgba(115,14,84,0.5)",
+					strokeColor: "rgba(220,220,220,1)",
+					pointColor: "rgba(115,14,84,0.2)",
+					data: [39, 46, 47, 49, 50, 52, 56, 58, 60, 61, 68, 69, 69, 74, 76]
+				}
+			]
+		};	
+
+			
+			var ctx = document.getElementById("overallLineChart").getContext("2d");
+			var lineChart = new Chart(ctx).Line(data, {
+				pointDot: false
+			});
+		});
+	</script>
+	
+{/body}

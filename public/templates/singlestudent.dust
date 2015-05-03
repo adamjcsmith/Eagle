@@ -1,0 +1,31 @@
+{>"layouts/main" /}
+
+{<title} {#context}{fullname}{/context} {/title}
+
+{<sectionurl}/student/{#context}{_id}{/context}{/sectionurl}
+
+{<sectionname} {#context}{fullname}{/context} {/sectionname}
+
+
+{<controltabs}
+	
+	{<workflowlink}/{mode}/{#context}{_id}{/context}/workflow{/workflowlink}
+	{<ringlink}/{mode}/{#context}{_id}{/context}/{/ringlink}
+	
+{/controltabs}
+
+
+{<body}
+
+	<canvas id="ringcanvas" class="ringchart"></canvas>	
+	
+	<script src="/js/charts/ring3.js"></script>
+		
+	<script>
+		$( document ).ready(function() {
+			var markData = [{marks}];
+			prepareRing(100,markData);
+		});
+	</script>
+	
+{/body}

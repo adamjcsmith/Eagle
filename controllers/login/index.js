@@ -21,7 +21,8 @@ module.exports = function (router) {
 	
 		req.session.username = username;
 	
-		res.send("Hello " + username + "!");
+		//res.send("Hello " + username + "!");
+		res.redirect('/dashboard/');
 	
 	});
 
