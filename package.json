@@ -4,7 +4,10 @@
   "description": "Exam Analysis Graphing Layout Engine",
   "author": "Adam Smith",
   "main": "index.js",
-  "engine": "node 0.10.35",
+  "engines": {
+	"node": "0.10.35",
+	"npm": "2.7.4"
+  }
   "scripts": {
     "test": "grunt test",
     "start": "node index.js"
