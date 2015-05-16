@@ -68,7 +68,7 @@
 	<script>
 
 	
-		var instanceMode = "{mode}";	
+		var instanceMode = "{mode|s}";	
 	
 		function openWorkflowMenu() {
 				
@@ -89,10 +89,10 @@
 	
 	
 		var newData;
-		var componentData = [{comps}];
-		var studentData = [{students}];
-		var markData = [{allmarks}];
-		var moduleData = [{mods}];
+		var componentData = [{comps|s}];
+		var studentData = [{students|s}];
+		var markData = [{allmarks|s}];
+		var moduleData = [{mods|s}];
 		
 		var contextualStuff = "{#context}{fullname}{/context}";
 		

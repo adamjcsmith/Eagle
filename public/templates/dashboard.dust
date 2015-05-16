@@ -50,9 +50,9 @@
 		
 		
 	</div>
-	
+	 
 	<script>
-		var compDocs = [{components}];	
+		var compDocs = [{components|s}];	
 
 		$( document ).ready(function() { 
 			$('#ringView').css("display", "none");

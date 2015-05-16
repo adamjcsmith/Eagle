@@ -7,7 +7,7 @@ var Schema = mongoose.Schema;
   
 // Define a student:
 var Module = new Schema({
-	_id : Number, 
+	_id : String, 
 	name : String, 
 	code: String
 });

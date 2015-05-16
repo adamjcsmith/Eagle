@@ -64,6 +64,10 @@
 	
 	</div>
 	
+	<p>{mods}</p>
+	
+	<p>Above here</p>
+	
 	
 	<script>
 
@@ -89,7 +93,7 @@
 	
 	
 		var newData;
-		var moduleData = [{mods}];
+		var moduleData = [{mods|s}];
 		
 		var socket = io();	
 	
