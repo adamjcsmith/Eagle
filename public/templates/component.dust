@@ -107,14 +107,14 @@
 		var ctx;
 		var chartCanvas;
 		var newData;
-		var markData = [{marks}];
+		var markData = [{marks|s}];
 		var scaleFactor = 1.00;
 		
 		var originalAggr;
 		var originalAverage;
 	
 		function setupBars() {
-			var originalData = [{marks}];
+			var originalData = [{marks|s}];
 			newData = {
 				labels: ['Fail', '3rd', '2:2', '2:1', '1:1'],
 				datasets: []

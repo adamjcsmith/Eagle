@@ -33,6 +33,7 @@ module.exports = function (router) {
 		
 		ModuleModel.find({_id: moduleid}, {}, function(error, moduledocs) {
 			
+			console.log("Trying to find module #" + moduleid + " with the no of results: " + moduledocs.length);
 			req.moduledocs = moduledocs;
 			next();
 			
