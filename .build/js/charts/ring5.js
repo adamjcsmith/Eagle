@@ -1,4 +1,5 @@
 /* "The Ring" Data Visualisation.  (C) 2015 Adam Smith */
+/* Originally 451 lines */
 
 var dataTracker;
 var isPressed = false;
@@ -15,8 +16,6 @@ var originalTotalMarks;
 function prepareRing(maxMark, studentData, dataTrack, socketinput) {
 	
 	socket = socketinput;
-	
-	console.log(studentData);
 	
 	// Assign to relevant objects:
 	dataTracker = dataTrack;	
@@ -37,27 +36,11 @@ function prepareRing(maxMark, studentData, dataTrack, socketinput) {
 	originalTotalMarks = studentData.length;
 	
 	// Add Event Listeners:
-	canvas.addEventListener("touchstart", eventTouchStart, false); 
-	canvas.addEventListener("touchmove", eventTouchMove, true); 
-    canvas.addEventListener("touchend", eventTouchEnd, false); 
  	canvas.addEventListener("mousedown", eventMouseDown, false); 
  	canvas.addEventListener("mousemove", eventMouseMove, false); 
  	canvas.addEventListener("mouseup", eventMouseUp, false); 
  	canvas.addEventListener("mouseleave", eventMouseLeave, false);	 
  	canvas.addEventListener("mouseover", eventMouseOver, false); 
-
-	// Touch Events
-	function eventTouchStart(e) {
-		
-	};
-	
-	function eventTouchMove(e) {
-		
-	};
-	
-	function eventTouchEnd(e) {
-		
-	};	
 	
 	// Mouse Events
 	function eventMouseDown(e) {
@@ -78,7 +61,7 @@ function prepareRing(maxMark, studentData, dataTrack, socketinput) {
 				break;
 			}
 		}
-	};	
+	}
 	
 	function eventMouseMove(e) {
 		var mouseX = e.pageX - this.offsetLeft;
@@ -93,7 +76,6 @@ function prepareRing(maxMark, studentData, dataTrack, socketinput) {
 			var invDiff = (oldDist / newDist);
 			
 			for(var i=0; i<dataTracker.length; i++) {
-				
 				
 					offsetX = ringCentreX - dataTracker[i].xPoint;
 					offsetY = ringCentreY - dataTracker[i].yPoint;
@@ -115,13 +97,15 @@ function prepareRing(maxMark, studentData, dataTrack, socketinput) {
 			redraw(context, canvas);
 		}
 		
-	};	
+	}
 	
 	function eventMouseUp(e) {
 		var mouseX = e.pageX - this.offsetLeft;
 		var mouseY = e.pageY - this.offsetTop;			
 		
-		isPressed = false;		
+		isPressed = false;	
+
+		var waitingToReceive;
 		
 		// Discover whether a click corresponds to a point:
 		for(var i=0; i<dataTracker.length; i++) {
@@ -130,25 +114,28 @@ function prepareRing(maxMark, studentData, dataTrack, socketinput) {
 			var radius = 60;
 			if( (Math.pow(xDiff,2) + Math.pow(yDiff,2)) < Math.pow(radius,2)) {
 				pressedObject = i;
-				//document.getElementById('student-name').innerHTML = dataTracker[i].studentID;
-				//document.getElementById('student-details').style.display = 'block';
 				
-				//$('#component-details').stop().fadeTo(400, 0.3);
 				$('#component-details').stop().fadeOut(400);
 				$('#extended-statistics').fadeOut(400);
 				$('#student-details').delay(400).fadeIn(400);
 				
 				removeInsightMarks(context, canvas);
 				socket.emit('studentRequest', dataTracker[i].studentID);
+				waitingToReceive = dataTracker[i].studentID;
 				
 				socket.on('studentResponse', function(data) {
-					document.getElementById('student-name').innerHTML = data.name + " / " + dataTracker[i].studentID;
-					addInsightMarks(context, canvas, dataTracker[i].studentID, data.marks, i);
+					
+					if(pressedObject == i) {
+						document.getElementById('student-name').innerHTML = data.name + " / " + dataTracker[i].studentID;
+						addInsightMarks(context, canvas, dataTracker[i].studentID, data.marks, i);
+						alert("i is: " + i);						
+					}
+					
+
 				});
 					
-					if(dataTracker[getDataByStudentID(dataTracker[i].studentID)].locked) switchLockButton('Lock');
-					else switchLockButton('Locked');				
-				
+				if(dataTracker[getDataByStudentID(dataTracker[i].studentID)].locked) switchLockButton('Lock');
+				else switchLockButton('Locked');				
 				
 				// Add insight details:
 				document.getElementById('insightMark').innerHTML = Math.round(dataTracker[i].currentMark);
@@ -165,7 +152,6 @@ function prepareRing(maxMark, studentData, dataTrack, socketinput) {
 					document.getElementById('insightMark').style.color = 'black';					
 				}
 					
-				
 				if(dataTracker[i].failCount > 0) {
 					document.getElementById('insightFailCount').style.backgroundColor = 'rgba(255,0,0, 0.5)';
 					document.getElementById('insightFailCount').style.color = 'white';
@@ -174,7 +160,6 @@ function prepareRing(maxMark, studentData, dataTrack, socketinput) {
 					document.getElementById('insightFailCount').style.backgroundColor = 'rgba(0, 255, 0, 0.4)';
 					document.getElementById('insightFailCount').style.color = 'black';					
 				}
-					
 				
 				if(dataTracker[i].componentTypeAverage.toFixed(1) < 40) {
 					document.getElementById('insightAverage').style.backgroundColor = 'rgba(255,0,0, 0.5)';
@@ -184,32 +169,24 @@ function prepareRing(maxMark, studentData, dataTrack, socketinput) {
 					document.getElementById('insightAverage').style.backgroundColor = 'rgba(0,255,0, 0.4)';
 					document.getElementById('insightAverage').style.color = 'black';						
 				}
-					
 				
 				break;
 			}
 			else {
-				//document.getElementById('student-details').style.display = 'none';
-					$('#student-details').stop().fadeOut(400);	
-					//$('#component-details').fadeTo(400, 1);
-					$('#component-details').fadeIn(400);
-					$('#extended-statistics').fadeIn(400);					
-					removeInsightMarks(context, canvas);
+				$('#student-details').stop().fadeOut(400);	
+				$('#component-details').fadeIn(400);
+				$('#extended-statistics').fadeIn(400);					
+				removeInsightMarks(context, canvas);
 		}		
 		
-
 		pressedObject = '';
 		}
 		
-	};		
+	}	
 	
-	function eventMouseLeave(e) {
-		
-	};		
+	function eventMouseLeave(e) { };		
 	
-	function eventMouseOver(e) {
-		
-	};			
+	function eventMouseOver(e) { };			
 	
 	// Extract data points and add to the canvas:
 	for(var i = 0; i < studentData.length; i++) {
@@ -231,6 +208,7 @@ function calculatePoint(health, id, total, max, canvas, insight, originalpos) {
 	
 	if(insight == true) {
 		radian = ((2*Math.PI)*(originalpos))/originalTotalMarks;
+		//alert("Radian is: " + originalpos);		
 	}
 	else {
 		radian = (2*Math.PI)/originalTotalMarks;
@@ -287,10 +265,8 @@ function redraw(context, canvas) {
 		}
 		else {
 			var newPoints = calculatePoint(Math.round(dataTracker[i].currentMark), i, dataTracker.length, 100, canvas, false, -1);
-
 		}
 		
-		//var newPoints = calculatePoint(Math.round(dataTracker[i].currentMark), i, dataTracker.length, 100, canvas, false);
 		dataTracker[i].xPoint = newPoints[0];
 		dataTracker[i].yPoint = newPoints[1];
 		
@@ -312,12 +288,7 @@ function redraw(context, canvas) {
 		}
 		
 		drawPoint(dataTracker[i].xPoint, dataTracker[i].yPoint, dataTracker[i].colour, context, canvas);
-		
 
-	
-	
-		// Update Percentage:
-		//document.title = (dataTracker[1].currentMark / dataTracker[1].rawMark) + '%';
 		document.getElementById('insightSuggestedScale').innerHTML = (dataTracker[1].currentMark / dataTracker[1].rawMark).toFixed(2) + 'x';
 		scaleFactor = (dataTracker[i].currentMark / dataTracker[i].rawMark).toFixed(2);
 		
@@ -385,10 +356,8 @@ function addMinMaxLine(context) {
 			else {
 				
 				if(dataTracker[i].rawMark < minMark) {
-					
 					minMark = dataTracker[i].rawMark;
 					minID = i;
-					
 				}
 				
 			}
@@ -402,8 +371,6 @@ function addMinMaxLine(context) {
 	context.lineWidth = 1;
 	context.strokeStyle = 'rgba(0,0,0,0.15)';
 	context.stroke();	
-	
-	//return [minID, maxID];
 	
 }
 
@@ -440,11 +407,8 @@ function lockTier(label, mode) {
 	
 }
 
-
 $(document).on("click", "#individualDetailsButton", function(){ 
-
 	window.location = "/student/" + studentHighlightID;
-
 });
 
 // Get DataTracker Array position by Student ID:

@@ -1,4 +1,5 @@
 /* "The Ring" Data Visualisation.  (C) 2015 Adam Smith */
+/* Originally 451 lines */
 
 var dataTracker;
 var isPressed = false;
@@ -35,19 +36,11 @@ function prepareRing(maxMark, studentData, dataTrack, socketinput) {
 	originalTotalMarks = studentData.length;
 	
 	// Add Event Listeners:
-	canvas.addEventListener("touchstart", eventTouchStart, false); 
-	canvas.addEventListener("touchmove", eventTouchMove, true); 
-    canvas.addEventListener("touchend", eventTouchEnd, false); 
  	canvas.addEventListener("mousedown", eventMouseDown, false); 
  	canvas.addEventListener("mousemove", eventMouseMove, false); 
  	canvas.addEventListener("mouseup", eventMouseUp, false); 
  	canvas.addEventListener("mouseleave", eventMouseLeave, false);	 
  	canvas.addEventListener("mouseover", eventMouseOver, false); 
-
-	// Touch Events
-	function eventTouchStart(e) { };
-	function eventTouchMove(e) { };
-	function eventTouchEnd(e) { };	
 	
 	// Mouse Events
 	function eventMouseDown(e) {
@@ -68,7 +61,7 @@ function prepareRing(maxMark, studentData, dataTrack, socketinput) {
 				break;
 			}
 		}
-	};	
+	}
 	
 	function eventMouseMove(e) {
 		var mouseX = e.pageX - this.offsetLeft;
@@ -104,13 +97,13 @@ function prepareRing(maxMark, studentData, dataTrack, socketinput) {
 			redraw(context, canvas);
 		}
 		
-	};	
+	}
 	
 	function eventMouseUp(e) {
 		var mouseX = e.pageX - this.offsetLeft;
 		var mouseY = e.pageY - this.offsetTop;			
 		
-		isPressed = false;		
+		isPressed = false;	
 		
 		// Discover whether a click corresponds to a point:
 		for(var i=0; i<dataTracker.length; i++) {
@@ -128,8 +121,13 @@ function prepareRing(maxMark, studentData, dataTrack, socketinput) {
 				socket.emit('studentRequest', dataTracker[i].studentID);
 				
 				socket.on('studentResponse', function(data) {
-					document.getElementById('student-name').innerHTML = data.name + " / " + dataTracker[i].studentID;
-					addInsightMarks(context, canvas, dataTracker[i].studentID, data.marks, i);
+					
+					if(pressedObject == i) {
+						document.getElementById('student-name').innerHTML = data.name + " / " + dataTracker[i].studentID;
+						addInsightMarks(context, canvas, dataTracker[i].studentID, data.marks, i);
+						alert("i is: " + i);						
+					}
+
 				});
 					
 				if(dataTracker[getDataByStudentID(dataTracker[i].studentID)].locked) switchLockButton('Lock');
@@ -180,7 +178,7 @@ function prepareRing(maxMark, studentData, dataTrack, socketinput) {
 		pressedObject = '';
 		}
 		
-	};		
+	}	
 	
 	function eventMouseLeave(e) { };		
 	
@@ -206,6 +204,7 @@ function calculatePoint(health, id, total, max, canvas, insight, originalpos) {
 	
 	if(insight == true) {
 		radian = ((2*Math.PI)*(originalpos))/originalTotalMarks;
+		//alert("Radian is: " + originalpos);		
 	}
 	else {
 		radian = (2*Math.PI)/originalTotalMarks;
