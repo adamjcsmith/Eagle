@@ -53,6 +53,7 @@
 	 
 	<script>
 		var compDocs = [{components|s}];	
+		var marksDocs = [{marks|s}];
 
 		$( document ).ready(function() { 
 			$('#ringView').css("display", "none");

@@ -104,8 +104,6 @@ function prepareRing(maxMark, studentData, dataTrack, socketinput) {
 		var mouseY = e.pageY - this.offsetTop;			
 		
 		isPressed = false;	
-
-		var waitingToReceive;
 		
 		// Discover whether a click corresponds to a point:
 		for(var i=0; i<dataTracker.length; i++) {
@@ -121,16 +119,13 @@ function prepareRing(maxMark, studentData, dataTrack, socketinput) {
 				
 				removeInsightMarks(context, canvas);
 				socket.emit('studentRequest', dataTracker[i].studentID);
-				waitingToReceive = dataTracker[i].studentID;
 				
 				socket.on('studentResponse', function(data) {
 					
 					if(pressedObject == i) {
 						document.getElementById('student-name').innerHTML = data.name + " / " + dataTracker[i].studentID;
-						addInsightMarks(context, canvas, dataTracker[i].studentID, data.marks, i);
-						alert("i is: " + i);						
+						addInsightMarks(context, canvas, dataTracker[i].studentID, data.marks, i);				
 					}
-					
 
 				});
 					

@@ -124,8 +124,7 @@ function prepareRing(maxMark, studentData, dataTrack, socketinput) {
 					
 					if(pressedObject == i) {
 						document.getElementById('student-name').innerHTML = data.name + " / " + dataTracker[i].studentID;
-						addInsightMarks(context, canvas, dataTracker[i].studentID, data.marks, i);
-						alert("i is: " + i);						
+						addInsightMarks(context, canvas, dataTracker[i].studentID, data.marks, i);				
 					}
 
 				});

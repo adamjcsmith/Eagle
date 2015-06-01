@@ -12,7 +12,7 @@ var mongoDB = require('mongodb');
 var mongoose = require('mongoose');
 var monk = require('monk');
 //var data = monk('localhost:8000/eagledb');
-mongoose.createConnection('mongodb://localhost/eagledb');	
+mongoose.createConnection('mongodb://fyp-user:password@ds034878.mongolab.com:34878/eagledb-fyp');	
 	
 	
 var io;
