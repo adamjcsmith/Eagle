@@ -240,7 +240,7 @@ function prepareWorkflow(componentData, studentData, allMarks, moduleData, mode)
 
 
 		open = 0;
-		$('#slider').slider("value", 10);	
+		$('#slider').slider("value", originalSliderVal);	
 
 		$('#' + clickedID).closest('.workflow-studentsection').css('display', 'block');
 		$('#' + clickedID).closest('.workflow-studentsection').css('position', 'static');		

@@ -120,7 +120,8 @@
 			}
 		
 		}
-
+		
+		
 		
 		for(var i=0; i<modules.length; i++) {
 		
@@ -151,9 +152,7 @@
 			cwkMarkArray.push(cwkMarks / cwkMarkCount);
 			
 		}
-		
-		
-		
+
 		
 		for(var i=0; i<examMarkArray.length; i++) {
 		
@@ -203,8 +202,17 @@
 		
 
 		for(var i=0; i<modules.length; i++) {
-			document.getElementById('weightedTotalRow').innerHTML += "<td>" + (examTotal + cwkTotal).toFixed(1) +"</td>";
-			document.getElementById('classificationRow').innerHTML += "<td>" + "1st" +"</td>";
+			document.getElementById('weightedTotalRow').innerHTML += "<td>" + (examMarkArray[i] + cwkTotal).toFixed(1) +"</td>";
+			
+			var cl = '';
+			if( examMarkArray[i] >= 70) cl = '1st';
+			else if( examMarkArray[i] >= 60 ) cl = '2:1';
+			else if( examMarkArray[i] >= 50 ) cl = '2:2';
+			else if( examMarkArray[i] >= 40 ) cl = '3rd';
+			else cl = 'Fail';
+			
+			
+			document.getElementById('classificationRow').innerHTML += "<td>" + cl +"</td>";
 		}
 		
 		

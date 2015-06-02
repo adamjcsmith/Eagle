@@ -74,37 +74,13 @@
 			
 			$('#seriesselect_chosen').css("display", "none");
 			
-			
-			
 			if(instanceMode == 'student') {
 				document.getElementById('pagetitle').innerHTML = contextualStuff;
 			}
 			
-
-			
-			
 		});  
 		
 		
-		
-		
-		
-		/* INSIGHT VARIABLES */
-		
-		//var ctx = document.getElementById("myChart").getContext("2d");
-		//var myBarChart = new Chart(ctx).Bar([], options);	
-		
-		// Edit data for ChartJS format:
-		
-		
-		// Watch for changes:
-		/*
-		watch(dataTracker, function(){
-			bars.redraw();
-			ring.redraw();
-			alert("Test!");
-		});
-		*/
 		
 		var seriesmenu = document.getElementById("seriesmenu");
 		seriesmenu.onchange=function(){
