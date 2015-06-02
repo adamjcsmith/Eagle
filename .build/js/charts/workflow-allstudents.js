@@ -116,8 +116,8 @@ function prepareWorkflow(componentData, studentData, allMarks, moduleData, mode)
 			
 			clickedID = evt.target.id;
 			
-			$('#studentFrameBox').finish().remove();
-			$('#floatingBox').finish().remove();
+			$('.frameBoxes').finish().remove();
+			$('.floatingBoxes').finish().remove();
 			
 			if(isNaN(evt.target.id)) return;
 
@@ -145,8 +145,8 @@ function prepareWorkflow(componentData, studentData, allMarks, moduleData, mode)
 			
 			var theElement = document.getElementById(evt.target.id);
 			
-			var sentID = 17553072; 
-			socket.emit('studentRequest', 17553072);
+			var sentID = $('#' + clickedID).closest('.workflow-studentsection').attr("id");
+			socket.emit('studentRequest', sentID);
 			
 
 			socket.on('studentResponse', function(data) {	
@@ -155,14 +155,15 @@ function prepareWorkflow(componentData, studentData, allMarks, moduleData, mode)
 				if(data.originalid != sentID) return;
 				
 				// Set up HTML to inject:
-				var studentFrame = "<iframe id='studentFrameBox' style='opacity: 0; width: 100%; height: 100%; border: none;' src='/student/" + data.originalid + "/choiceview'></iframe>";
-				var floatingBox = "<div id='floatingBox'><a id='approveButton' href='#' class='insightButton miniButton'>Approve</a><a id='backButton' href='#' class='insightButton miniButton'>Back</a></div>";
+				var studentFrame = "<iframe id='studentFrameBox' class='frameBoxes' style='opacity: 0; width: 100%; height: 100%; border: none;' src='/student/" + data.originalid + "/choiceview'></iframe>";
+				var floatingBox = "<div id='floatingBox' class='floatingBoxes' style=''><a id='approveButton' href='#' class='insightButton miniButton'>Approve</a><a id='backButton' href='#' class='insightButton miniButton'>Back</a></div>";
 				
 				// Add new UI Namespaces with animation:
 				$('#' + evt.target.id).delay(000).append(studentFrame + floatingBox);
-				$('#studentFrameBox').delay(200).animate({opacity: 1}, 500, 'easeInOutCubic');	
+				$('#studentFrameBox').finish().delay(200).animate({opacity: 1}, 500, 'easeInOutCubic');	
 				//$('#studentFrameBox').delay(1000).css({display: 'inline-block'});				
-				$('#floatingBox').delay(1000).fadeIn(500);		
+				//$('#floatingBox').finish().delay(1000).fadeIn(500);	
+				$('#floatingBox').css({display: 'block', opacity: 1});			
 
 				//$('#holder').finish().remove();
 			});
@@ -211,11 +212,11 @@ function prepareWorkflow(componentData, studentData, allMarks, moduleData, mode)
 	
 	function closeActive() {
 		
-		$('#floatingBox').fadeOut(500);
-		$('#studentFrameBox').fadeOut(500);
+		$('.floatingBoxes').finish().fadeOut(500);
+		$('.frameBoxes').finish().fadeOut(500);
 		
-		$('#studentFrameBox').delay(750).remove();
-		$('#floatingBox').delay(750).remove();		
+		$('.floatingBoxes').delay(750).remove();
+		$('.frameBoxes').delay(750).remove();		
 		
 		$('#' + openID).delay(2000).css({backgroundColor: '', color: '', padding: '', margin: '', width: '', height: '', position: 'relative', top: '', left: '', right: '', bottom: '', display: 'inline-block'});
 
