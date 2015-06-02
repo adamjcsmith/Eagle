@@ -34,7 +34,7 @@ function prepareWorkflow(markData, mode) {
 		var avgExamSquare = "<div class='insightSquare staticSquare' id='avgExam" + idMode +"' style='display: none; color: black; pointer-events: none; background: white; margin-top: 6%'>?</div>";		
 		var failedExamSquare = "<div class='insightSquare staticSquare' id='failedExam" + idMode +"' style='display: none; color: black; pointer-events: none; background: white; margin-top: 6%'>?</div>";
 		var insightLabels = "<div style='clear: both;'></div><div class='insightLabel' style='display: none; pointer-events: none;'>Avg. Comps.</div><div class='insightLabel' style='display: none'>Failed Comps.</div>";
-		var workMarkHTML = "<span id='mainMark" + idMode + "' class='workMark' style='display: none; pointer-events: none;'>" + bigIndication +"</span>";
+		var workMarkHTML = "<span id='mainMark" + idMode + "' class='workMark' style='pointer-events: none;'>" + bigIndication +"</span>";
 		var nameHTML = "<div class='studentName' style='display: none; margin-top: 1%; pointer-events: none;' id='name"+ idMode +"'></div>";
 		
 		var moduleNameHTML = "";
@@ -90,7 +90,10 @@ function prepareWorkflow(markData, mode) {
 		elem.innerHTML += workflowHTML;			
 
 		
+
+		
 	}
+	
 	
 	
 	// Mode Switching:
@@ -118,7 +121,7 @@ function prepareWorkflow(markData, mode) {
 	}
 	
 	
-
+	if(mode == 'student') $('.workMark').css("display", "block");
 	
 	
 	
@@ -316,8 +319,7 @@ function prepareWorkflow(markData, mode) {
 			var theColour = '';
 			var mrk = markData[i].rawResult;
 			
-			if(mrk > 39) theColour = 'rgba(0,0,0, 0.3)';
-			else if(mrk > 36) theColour = 'rgba(255,165,0, 0.5)';
+			if(mrk > 40) theColour = '#5e5e5e';
 			else theColour = 'rgba(255,0,0,0.5)';
 		
 			$('#' + i).animate({backgroundColor: theColour}, 500, 'easeInOutCubic');

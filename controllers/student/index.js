@@ -40,12 +40,35 @@ module.exports = function (router) {
 					req.degreescheme = cohortz[0].name;
 					next();					
 				})
-				
-				
 
 			});
 	  });
 	});
+	
+	
+	// Student parameters:
+	router.param('compid', function(req, res, next, compid) {
+		
+		Components.find({}, function(err, compdocs) {
+			
+			console.log("Component number: " + compid + " is length: " + compdocs.length);
+			req.compstuff = compid;
+			
+			Markz.find({componentID: '1'}, {}, function(error, fullmarksdocs) {
+				
+				console.log("Fullmarks docs length: " + fullmarksdocs.length);
+				req.fullmarksdocs = fullmarksdocs;
+				next();
+				
+			}).sort({rawResult: 1});
+			
+		})
+		
+		
+	});
+		
+	
+	
 
     router.get('/', function (req, res) {
 		// Get all student data:
@@ -85,9 +108,11 @@ module.exports = function (router) {
 		else res.send("Student not found.");
 	});
 	
-	router.get('/:studentid/choiceview', function(req, res) {
+	router.get('/:studentid/choiceview/:compid', function(req, res) {
+		
 		if(req.docs.length > 0) {
-			res.render('studentchoiceview', {context: req.docs[0], marks: req.marks, degreescheme: req.degreescheme});
+
+			res.render('studentchoiceview', {context: req.docs[0], marks: req.marks, degreescheme: req.degreescheme, comp: req.compstuff });
 		}
 		else res.send("Student not found.");	
 	});
@@ -100,10 +125,10 @@ module.exports = function (router) {
 		else res.send("Student not found.");		
 	});
 	
-	router.get('/:studentid/workflow/', function(req, res) {
+	router.get('/:studentid/workflow/:compid/', function(req, res) {
 		// Check for student existence, if not then return an error page:
 		if(req.docs.length > 0) {
-			res.render('workflow-solostudent', {context: req.docs[0], marks: req.marks, degreescheme: req.degreescheme, mode: 'Student'});
+			res.render('workflow-solostudent', {context: req.docs[0], marks: req.fullmarksdocs, degreescheme: req.degreescheme, mode: 'Student', component: req.compstuff});
 		}
 		else res.send("Student not found.");		
 	});	

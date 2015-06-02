@@ -19,7 +19,7 @@
 	
 		<a class="insightButton miniButton" href="fullview" style="padding: 10%; font-size: 30px;">Details</a>
 	
-		<a class="insightButton miniButton" href="workflow" style="padding: 10%; font-size: 30px;">Flow</a>
+		<a class="insightButton miniButton" href="../workflow/{comp|s}" style="padding: 10%; font-size: 30px;">Flow</a>
 	
 	
 	

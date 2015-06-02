@@ -150,8 +150,11 @@ function prepareWorkflow(componentData, studentData, allMarks, moduleData, mode)
 				// Disregard previous socket responses:
 				if(data.originalid != sentID) return;
 				
+				// Discover which component (all exams):
+				var thisComponent = Math.floor(evt.target.id / compData.length);
+				
 				// Set up HTML to inject:
-				var studentFrame = "<iframe id='studentFrameBox' class='frameBoxes' style='opacity: 0; width: 100%; height: 100%; border: none;' src='/student/" + data.originalid + "/choiceview'></iframe>";
+				var studentFrame = "<iframe id='studentFrameBox' class='frameBoxes' style='opacity: 0; width: 100%; height: 100%; border: none;' src='/student/" + data.originalid + "/choiceview/" + thisComponent + "'></iframe>";
 				var floatingBox = "<div id='floatingBox' class='floatingBoxes' style=''><a id='approveButton' href='#' class='insightButton miniButton'>Approve</a><a id='backButton' href='#' class='insightButton miniButton'>Back</a></div>";
 				
 				// Add new UI Namespaces with animation:
