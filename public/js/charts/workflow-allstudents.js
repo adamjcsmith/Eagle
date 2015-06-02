@@ -297,7 +297,7 @@ function prepareWorkflow(componentData, studentData, allMarks, moduleData, mode)
 	
 	$(document).on("click", "#resetApprovedButton", function(){ 
 		approvedData = [];
-		$('.workflow-element').finish().velocity({opacity: 1}, 500, 'easeInOutCubic');
+		$('.workflow-studentsection').finish().animate({opacity: 1}, 500, 'easeInOutCubic');
 		
 		if(currentHighlightMode == 'standard') standardHighlights();
 		else enhancedHighlights();		
