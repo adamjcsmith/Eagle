@@ -103,17 +103,11 @@ function prepareWorkflow(componentData, studentData, allMarks, moduleData, mode)
 		standardHighlights();
 	}).css("display","inline-block");		
 	
-	/*
-	$('.workflow-element').animate({opacity: '1'}, 800, 'easeInOutCubic', function() {
-		
-	}).css("display", "inline-block");
-	*/
-	
 	
 	$('.workflow-element').click(function(evt) {
 	
 		if(open == 0 && !locked) {
-			
+
 			clickedID = evt.target.id;
 			
 			$('.frameBoxes').finish().remove();
@@ -246,17 +240,20 @@ function prepareWorkflow(componentData, studentData, allMarks, moduleData, mode)
 
 
 		open = 0;
-		$('#slider').slider("value", 10);		
+		$('#slider').slider("value", 10);	
+
+		$('#' + clickedID).closest('.workflow-studentsection').css('display', 'block');
+		$('#' + clickedID).closest('.workflow-studentsection').css('position', 'static');		
 		
 	}
 	
 	
 	function enhancedHighlights() {
 		
-		for(var i=0; i<componentData.length; i++) {
+		for(var i=0; i<maxStuff; i++) {
 
 			var theColour = '';
-			var mrk = componentData[i].rawResult;
+			var mrk = parseInt($('#' + i).find('.moduleName').html());
 			
 			if(mrk > 69) theColour = '#8C489F';
 			else if(mrk > 67) theColour = '#b19cd9';
@@ -266,9 +263,9 @@ function prepareWorkflow(componentData, studentData, allMarks, moduleData, mode)
 			else if(mrk > 47) theColour = '#99CC99';
 			else if(mrk > 39) theColour = '#FF6600';
 			else if(mrk > 37) theColour = '#FF9900';
-			else theColour = 'maroon';			
+			else if(mrk >= 0 ) theColour = 'maroon';			
 				
-			$('#' + i).velocity({backgroundColor: theColour}, 500, 'easeInOutCubic');
+			$('#' + i).animate({backgroundColor: theColour}, 500, 'easeInOutCubic');
 		
 		}		
 		
@@ -277,16 +274,15 @@ function prepareWorkflow(componentData, studentData, allMarks, moduleData, mode)
 	
 	function standardHighlights() {
 		
-		for(var i=0; i<componentData.length; i++) {
+		for(var i=0; i<maxStuff; i++) {
 
 			var theColour = '';
-			var mrk = componentData[i].rawResult;
+			var mrk = parseInt($('#' + i).find('.moduleName').html());
 			
-			if(mrk > 39) theColour = 'rgba(0,0,0, 0.3)';
-			else if(mrk > 36) theColour = 'rgba(255,165,0, 0.5)';
-			else theColour = 'rgba(255,0,0,0.5)';
+			if(mrk > 39) theColour = '#5e5e5e';
+			else if(mrk >= 0) theColour = 'rgba(255,0,0,0.4)';
 		
-			$('#' + i).velocity({backgroundColor: theColour}, 500, 'easeInOutCubic');
+			$('#' + i).animate({backgroundColor: theColour}, 500, 'easeInOutCubic');
 		
 		}
 		

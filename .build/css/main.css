@@ -435,7 +435,7 @@ th, td {
 
 #floatingBox {
   position: absolute;
-  right: 0;
+  right: 20px;
   top: 18px;
   width: 50%;
   display: none;
