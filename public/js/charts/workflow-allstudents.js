@@ -240,7 +240,7 @@ function prepareWorkflow(componentData, studentData, allMarks, moduleData, mode)
 		$('#' + clickedID).css({position: '', backgroundColor: '#5e5e5e', color: 'white'});		
 		
 		open = 0;
-		$('#slider').slider("value", originalSliderVal);		
+		$('#slider').slider("value", 10);		
 		
 	}
 	
@@ -402,54 +402,25 @@ function prepareWorkflow(componentData, studentData, allMarks, moduleData, mode)
 		max: 10,
 		min: 5,
 		step: 5,
-		value: 5,
+		value: 10,
 		change: function(event, ui) {
 			
 			locked = true;
 			
-			//if(locked) $('.workflow-element').delay(500).finish();
+			//$('.workflow-element').finish().animate({width: ui.value + '%', height: ui.value + '%' }, 1000, 'easeInOutCubic');
 			
-			//alert("Width: " + ui.value + " and height: " + ui.value);
-		
-			//$('.workflow-element').css({width: $('.workflow-element').outerWidth(), height: $('.workflow-element').outerHeight(), padding: '10'});
-			
-			//alert( $('.workflow-element').width() );
-			
-			// Calculate width:
-			
-			//var newWidthHeight = $('#workflow-view').outerWidth()
-			
-			$('.workflow-element').finish().animate({width: ui.value + '%', height: ui.value + '%' }, 1000, 'easeInOutCubic');
-			
-			//alert( $('.workflow-element').width() );			
-			
-			//$('.workflow-element').animate({backgroundColor: 'black'}, 700, 'easeInOutCubic');
-			
-			if(ui.value == 5) {
-				/*
-				$('.workMark').fadeOut(1000);
-				$('.studentName').fadeOut(1000);
+			if(ui.value == 10) {
 				
-				$('.insightSquare').fadeOut(500);
-				$('.insightLabel').fadeOut(500);	
-				$('.workMark').stop().velocity({fontSize: ''}, 500, 'easeInOutCubic');			
-				*/
-				
+				$('.workflow-studentsection').animate({borderWidth: 1, padding: '1%'}, 1000, 'easeInOutCubic');				
+				$('.workflow-studentsection-detailsarea').animate({width: '30%', fontSize: '1.17em'}, 1000, 'easeInOutCubic');
+				$('.workflow-element').animate({margin: '1%'}, 500, 'easeInOutCubic');				
+
 				$('#workflow-view').velocity({paddingTop: "0%"}, 500, 'easeInOutCubic', function() {
 					locked = false;
 					
 				});
 			}
-			else if(ui.value == 10) {
-				
-				/*
-				$('.workMark').stop().delay(500).fadeIn(500);
-				$('.workMark').velocity({fontSize: 70}, 500, 'easeInOutCubic');
-				$('.studentName').delay(500).fadeIn(500);
-
-				$('.insightSquare').fadeOut(500);
-				$('.insightLabel').fadeOut(500);		
-				*/
+			else if(ui.value == 5) {
 				
 				$('.workflow-studentsection').animate({borderWidth: 0, padding: '2'}, 1000, 'easeInOutCubic');				
 				$('.workflow-studentsection-detailsarea').animate({width: 0, fontSize: 0}, 1000, 'easeInOutCubic');
