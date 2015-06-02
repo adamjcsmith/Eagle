@@ -223,7 +223,6 @@ function prepareWorkflow(componentData, studentData, allMarks, moduleData, mode)
 		$('#holder').remove();
 		
 		
-		
 		for(var i=0; i<maxStuff; i++) {
 			$('#' + i).delay(1500).finish().animate({opacity: 1}, 500, 'easeInOutCubic').delay(400).queue(function(etc) {
 				$('#' + i).delay(2000).css({width: '5%', height: '5%', padding: '2%', margin: ''});
@@ -237,8 +236,9 @@ function prepareWorkflow(componentData, studentData, allMarks, moduleData, mode)
 		if(currentHighlightMode == 'standard') standardHighlights();
 		else enhancedHighlights();			
 
-		$('#' + clickedID).css({position: '', backgroundColor: '#5e5e5e', color: 'white'});		
+		$('#' + clickedID).css({position: '', backgroundColor: '#5e5e5e', color: 'white', width: '5%', padding: '', margin: '', height: ''});		
 		
+
 		open = 0;
 		$('#slider').slider("value", 10);		
 		
@@ -412,7 +412,7 @@ function prepareWorkflow(componentData, studentData, allMarks, moduleData, mode)
 			if(ui.value == 10) {
 				
 				$('.workflow-studentsection').animate({borderWidth: 1, padding: '1%'}, 1000, 'easeInOutCubic');				
-				$('.workflow-studentsection-detailsarea').animate({width: '30%', fontSize: '1.17em'}, 1000, 'easeInOutCubic');
+				$('.workflow-studentsection-detailsarea').animate({width: '30%', fontSize: '1em'}, 1000, 'easeInOutCubic');
 				$('.workflow-element').animate({margin: '1%'}, 500, 'easeInOutCubic');				
 
 				$('#workflow-view').velocity({paddingTop: "0%"}, 500, 'easeInOutCubic', function() {
