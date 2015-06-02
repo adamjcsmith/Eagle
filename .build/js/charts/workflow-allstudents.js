@@ -148,6 +148,8 @@ function prepareWorkflow(componentData, studentData, allMarks, moduleData, mode)
 			var sentID = $('#' + clickedID).closest('.workflow-studentsection').attr("id");
 			socket.emit('studentRequest', sentID);
 			
+			$('#' + clickedID).find('.moduleName').fadeOut(500);
+			
 
 			socket.on('studentResponse', function(data) {	
 			
@@ -233,12 +235,15 @@ function prepareWorkflow(componentData, studentData, allMarks, moduleData, mode)
 			});	
 		}	
 
+		$('#' + clickedID).find('.moduleName').fadeIn(500);
+		
+		$('#' + clickedID).css({position: '', backgroundColor: '#5e5e5e', color: 'white', width: '5%', padding: '', margin: '', height: ''});		
+				
 		
 		if(currentHighlightMode == 'standard') standardHighlights();
 		else enhancedHighlights();			
 
-		$('#' + clickedID).css({position: '', backgroundColor: '#5e5e5e', color: 'white', width: '5%', padding: '', margin: '', height: ''});		
-		
+
 
 		open = 0;
 		$('#slider').slider("value", 10);		
@@ -440,7 +445,7 @@ function prepareWorkflow(componentData, studentData, allMarks, moduleData, mode)
 	  
 	
 	  $(function() {
-
+	  
 		$( "#filter-slider" ).slider({
 		velocity: "slow",
 		max: 100,
@@ -451,10 +456,22 @@ function prepareWorkflow(componentData, studentData, allMarks, moduleData, mode)
 			
 			locked = true;
 	
-			for(var i=0; i<maxStuff.length; i++) {
+			for(var i=0; i<maxStuff; i++) {
 				
-				if(componentData[i].rawResult > ui.value) $('#' + i).finish().fadeOut(500);
-				else $('#' + i).finish().fadeIn(500);
+				//if(componentData[i].rawResult > ui.value) $('#' + i).finish().fadeOut(500);
+				//else $('#' + i).finish().fadeIn(500);
+
+				if(  parseInt($('#' + i).find('.moduleName').html()) > ui.value ) {
+					//alert("Hi");
+					$('#' + i).finish().animate({opacity: 0}, 500, 'easeInOutCubic');
+					
+				}
+				else {
+					 //alert("No");
+					 $('#' + i).finish().animate({opacity: 1}, 500, 'easeInOutCubic');
+					
+				}
+				
 			}	
 			
 			document.getElementById('filtertext').innerHTML = "Filter Threshold : " + ui.value + "%";
